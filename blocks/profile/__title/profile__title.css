@@ -1,0 +1,40 @@
+.profile__title {
+  margin: 0;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 42px;
+  line-height: 1.14;
+  color: #FFFFFF;
+  display: flex;
+  gap: 18px;
+  align-items: baseline;
+}
+
+.profile__title::after {
+  content: '';
+  width: 24px;
+  height: 24px;
+  box-sizing: border-box;
+  border: 1px solid #FFFFFF;
+  background-image: url(../../../images/edit-button.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 920px) {
+  .profile__title {
+    font-size: 27px;
+    line-height: 1.22;
+  }
+  .profile__title::after {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 500px) {
+  .profile__title {
+    justify-content: center;
+    gap: 10px;
+  }
+}

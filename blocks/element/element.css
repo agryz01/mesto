@@ -1,0 +1,7 @@
+.element {
+  border-radius: 10px;
+  width: 100%;
+  overflow: hidden;
+  background-color: #da1515;
+  line-height: 0;
+}
