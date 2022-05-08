@@ -1,0 +1,11 @@
+.header {
+  padding-top: 3.5%;
+  padding-left: calc(17.7% - 28px);
+  padding-right: calc(17.7% - 28px);
+}
+
+@media (max-width: 800px) {
+  .header {
+    padding-top: 28px;
+  }
+}

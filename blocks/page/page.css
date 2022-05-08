@@ -1,0 +1,11 @@
+:root {
+  background-color: #000000;
+}
+
+.page {
+  background-color: #000000;
+  max-width: 1280px;
+  margin: 0 auto;
+  font-family: 'Inter', Arial, sans-serif;
+  text-rendering: optimizeLegibility;
+}
