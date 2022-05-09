@@ -3,7 +3,7 @@
   padding-left: calc(18% - 30.66px);
   padding-right: calc(18% - 30.66px);
   display: grid;
-  grid-template-columns: 120px auto 150px;
+  grid-template-columns: 120px minmax(200px, 610px) 150px;
   grid-template-rows: 1fr;
   grid-template-areas:
   "avatar info add-button";
@@ -12,7 +12,7 @@
 
 @media (max-width: 768px) {
   .profile {
-    grid-template-columns: 120px auto;
+    grid-template-columns: 120px minmax(100px, 450px);
     grid-template-rows: auto auto;
     grid-template-areas: 
     "avatar info"
@@ -24,7 +24,7 @@
   .profile {
     padding-left: calc(18.85% - 41.33px);
     padding-right: calc(18.85% - 41.33px);
-    grid-template-columns: auto;
+    grid-template-columns: minmax(100px, 400px);
     grid-template-rows: repeat(3, auto);
     grid-template-areas: 
     "avatar"

@@ -1,0 +1,10 @@
+.element__checkbox {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  clip: rect(0 0 0 0);
+}
+
+.element__checkbox:checked + .element__favourites {
+  background-image: url(../../../images/favourites_active.svg);
+}

@@ -1,9 +1,10 @@
-.form__buttom {
+.popup__button {
   border-style: none;
   width: 100%;
   height: 50px;
   background-color: rgba(0, 0, 0, 1);
   color: rgba(255, 255, 255, 1);
+  font-family: inter;
   font-weight: 400;
   font-size: 18px;
   line-height: 1.22;
@@ -11,7 +12,7 @@
   cursor: pointer;
 }
 
-.form__buttom:hover {
+.popup__button:hover {
   opacity: .8;
   transition: .5s;
 }
