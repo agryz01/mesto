@@ -5,4 +5,10 @@
   background-repeat: no-repeat;
   background-size: contain;
   flex-shrink: 0;
+  cursor: pointer;
+}
+
+.element__favourites:hover {
+  opacity: .5;
+  transition: .5s;
 }
