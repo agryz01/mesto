@@ -21,6 +21,7 @@ let nameInput = popup.querySelector('.popup_input_name');
 let jobInput = popup.querySelector('.popup_input_activity');
 
 function formSubmitHandler(evt) {
+  console.log('нажатие кнопки "Сохранить"');
   evt.preventDefault();
 
   let profileTitle = document.querySelector('.profile__title');
@@ -29,5 +30,6 @@ function formSubmitHandler(evt) {
 
   profileTitle.textContent = nameInput.value;
   profileSubtitle.textContent = jobInput.value;
+  popup.classList.remove('popup__opened');
 }
 formElement.addEventListener('submit', formSubmitHandler);
