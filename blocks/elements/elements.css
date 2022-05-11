@@ -1,5 +1,5 @@
 .elements {
-  padding-top: 51px;
+  padding-top: calc(1.56% + 31px);
   padding-left: calc(18.85% - 41.33px);
   padding-right: calc(18.85% - 41.33px);
   row-gap: 20px;

@@ -13,7 +13,7 @@
 @media (max-width: 920px) {
   .profile {
     grid-template-columns: 120px minmax(10px, max-content) auto;
-    grid-template-rows: 1fr 72px;
+    grid-template-rows: 1fr 80px;
     grid-template-areas:
       "profile__avatar profile__profile-info profile__edit-button"
       "profile__add-button profile__add-button profile__add-button";

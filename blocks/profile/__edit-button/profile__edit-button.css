@@ -19,5 +19,6 @@
     width: 18px;
     height: 18px;
     margin-left: 10px;
+    transform: translateY(-12px);
   }
 }
