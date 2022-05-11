@@ -16,3 +16,9 @@
     line-height: 1.22;
   }
 }
+
+@media (max-width: 400px) {
+  .profile__title {
+    text-align: center;
+  }
+}
