@@ -13,8 +13,8 @@ closingIcon.addEventListener('click', function (event) {
 });
 
 let formElement = popup.querySelector('.popup__container');
-let nameInput = popup.querySelector('.popup_input_name');
-let jobInput = popup.querySelector('.popup_input_activity');
+let nameInput = popup.querySelector('.popup__input-text_input_name');
+let jobInput = popup.querySelector('.popup__input-text_input_activity');
 
 function formSubmitHandler(evt) {
   console.log('нажатие кнопки "Сохранить"');
