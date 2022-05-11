@@ -16,5 +16,6 @@
 @media (max-width: 920px) {
   .profile__add-button {
     width: 100%;
+    align-self: flex-end;
   }
 }
