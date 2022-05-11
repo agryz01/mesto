@@ -12,6 +12,10 @@
   cursor: pointer;
   justify-self: end;
 }
+.profile__add-button:hover {
+  opacity: .6;
+  transition: .5s;
+}
 
 @media (max-width: 920px) {
   .profile__add-button {

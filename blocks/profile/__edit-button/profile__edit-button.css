@@ -13,6 +13,10 @@
   margin-left: 18px;
   transform: translateY(-13px);
 }
+.profile__edit-button:hover {
+  opacity: .6;
+  transition: .5s;
+}
 
 @media (max-width: 920px) {
   .profile__edit-button {
