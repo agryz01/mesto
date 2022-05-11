@@ -1,16 +1,16 @@
-let editButton = document.querySelector('.profile__edit-button');
-let popup = document.querySelector('.popup');
-let closingIcon = popup.querySelector('.popup__closing-icon');
-let button = document.querySelector('.popup__button');
+const editButton = document.querySelector('.profile__edit-button');
+const popup = document.querySelector('.popup');
+const closingIcon = document.querySelector('.popup__closing-icon');
+const button = document.querySelector('.popup__button');
 
-editButton.addEventListener('click', function () {
+editButton.addEventListener('click', function (event) {
   console.log('нажатие кнопки edit');
   popup.classList.add('popup__opened');
-})
-closingIcon.addEventListener('click', function () {
+});
+closingIcon.addEventListener('click', function (event) {
   console.log('нажатие крестика');
   popup.classList.remove('popup__opened');
-})
+});
 
 let formElement = popup.querySelector('.popup__container');
 let nameInput = popup.querySelector('.popup_input_name');
