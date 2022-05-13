@@ -7,10 +7,9 @@ const jobInput = popup.querySelector('.popup__input-text_input_activity');
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
 
-nameInput.value = profileTitle.textContent;
-jobInput.value = profileSubtitle.textContent;
-
-editButton.addEventListener('click', function() {
+editButton.addEventListener('click', function () {
+  nameInput.value = profileTitle.textContent;
+  jobInput.value = profileSubtitle.textContent;
   popup.classList.add('popup_opened');
 });
 
