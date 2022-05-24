@@ -24,49 +24,7 @@
       <button type="button" aria-label="добавление карточки." class="profile__add-button"></button>
     </section>
     <section class="list-of-places">
-      <ul class="elements list-without-markers">
-        <li class="element">
-          <img src="./images/kirill-pershin-1088404-unsplash.jpg" alt="монастырь в Карачаевске." class="element__image">
-          <div class="element__group">
-            <h2 class="element__title">Карачаевск</h2>
-            <button type="button" aria-label="добавление в избранное." class="element__favourites"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img src="./images/kirill-pershin-1404681-unsplash.jpg" alt="вид на Эльбрус." class="element__image">
-          <div class="element__group">
-            <h2 class="element__title">Гора Эльбрус</h2>
-            <button type="button" aria-label="добавление в избранное." class="element__favourites"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img src="./images/kirill-pershin-1556355-unsplash.jpg" alt="пейзаж Домбая." class="element__image">
-          <div class="element__group">
-            <h2 class="element__title">Домбай</h2>
-            <button type="button" aria-label="добавление в избранное." class="element__favourites"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img src="./images/kirill-pershin-1404681-unsplash.jpg" alt="вид на Эльбрус." class="element__image">
-          <div class="element__group">
-            <h2 class="element__title">Гора Эльбрус</h2>
-            <button type="button" aria-label="добавление в избранное." class="element__favourites"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img src="./images/kirill-pershin-1556355-unsplash.jpg" alt="пейзаж Домбая." class="element__image">
-          <div class="element__group">
-            <h2 class="element__title">Домбай</h2>
-            <button type="button" aria-label="добавление в избранное." class="element__favourites"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img src="./images/kirill-pershin-1088404-unsplash.jpg" alt="монастырь в Карачаевске." class="element__image">
-          <div class="element__group">
-            <h2 class="element__title">Карачаево-Черкесия</h2>
-            <button type="button" aria-label="добавление в избранное." class="element__favourites"></button>
-          </div>
-        </li>
+      <ul class="elements">
       </ul>
     </section>
   </main>
@@ -77,11 +35,23 @@
     <form name="profileedit" method="post" class="popup__container">
       <button type="button" class="popup__closing-icon"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
-      <input type="text" name="yourname" placeholder="Как вас зовут?" class="popup__input-text popup__input-text_input_name">
-      <input type="text" name="yourjob" placeholder="Чем вы занимаетесь?" class="popup__input-text popup__input-text_input_activity">
+      <input type="text" name="yourname" placeholder="Как вас зовут?"
+        class="popup__input-text popup__input-text_input_name">
+      <input type="text" name="yourjob" placeholder="Чем вы занимаетесь?"
+        class="popup__input-text popup__input-text_input_activity">
       <button type="submit" class="popup__button">Сохранить</button>
     </form>
   </div>
+  <template class="template-element">
+    <li class="element">
+      <div style="background-image: url('https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg');" class="element__image"></div>
+      <div class="element__group">
+        <h2 class="element__title">Карачаевск</h2>
+        <button type="button" aria-label="добавление в избранное." class="element__favourites"></button>
+      </div>
+    </li>
+  </template>
   <script src="./script/script.js"></script>
 </body>
+
 </html>
