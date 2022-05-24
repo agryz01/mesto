@@ -28,3 +28,48 @@ function formSubmitHandler(evt) {
 }
 
 formElement.addEventListener('submit', formSubmitHandler);
+
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
+const cardListElement = document.querySelector('.elements');
+
+function renderList(data) {
+  data.forEach(item => renderItem(item))
+}
+
+function renderItem(element) {
+  const templateElement = document.querySelector('.template-element').content;
+  const listElement = templateElement.cloneNode(true);
+  const titleElement = listElement.querySelector('.element__title');
+  const imageElement = listElement.querySelector('.element__image');
+  titleElement.textContent = element.name;
+  imageElement.style = `background-image: url(${element.link});`;
+  cardListElement.append(listElement);
+}
+
+renderList(initialCards);
