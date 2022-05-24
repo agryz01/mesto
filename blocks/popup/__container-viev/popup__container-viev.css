@@ -1,0 +1,6 @@
+.popup__container-viev {
+  width: 75vw;
+  height: 75vh;
+  position: relative;
+  background-size: cover;
+}
