@@ -82,10 +82,6 @@ const initialCards = [
 
 const cardListElement = document.querySelector('.elements');
 
-function renderList(data) {
-  data.forEach(item => renderItem(item));
-}
-
 function renderItem(element) {
   const templateElement = document.querySelector('.template-element').content;
   const listElement = templateElement.cloneNode(true);
@@ -94,6 +90,10 @@ function renderItem(element) {
   titleElement.textContent = element.name;
   imageElement.style = `background-image: url(${element.link});`;
   cardListElement.append(listElement);
+}
+
+function renderList(data) {
+  data.forEach(item => renderItem(item));
 }
 
 renderList(initialCards);
@@ -106,12 +106,12 @@ function favourites(evt) {
   favoritElement.classList.toggle('element__favourites_active');
 }
 
-function allfavourites() {
+function allFavourites() {
   const buttonFavorit = document.querySelectorAll('.element__favourites').forEach((button) => {
     button.addEventListener('click', favourites);
   });
 }
-allfavourites()
+allFavourites()
 
 const buttonFavorit = document.querySelectorAll('.element__favourites').forEach((button) => {
   button.addEventListener('click', favourites);
@@ -121,7 +121,6 @@ const buttonFavorit = document.querySelectorAll('.element__favourites').forEach(
 
 function formSubmitHandlerAdd(evt) {
   evt.preventDefault();
-
   const templateElement = document.querySelector('.template-element').content;
   const listElement = templateElement.cloneNode(true);
   const titleElement = listElement.querySelector('.element__title');
@@ -130,8 +129,8 @@ function formSubmitHandlerAdd(evt) {
   imageElement.style = `background-image: url(${urlPlace.value});`;
   cardListElement.prepend(listElement);
   closeFormWindowAdd();
-  allfavourites();
-  alldeleticon();
+  allFavourites();
+  allDeletIcon();
   openWindowsVievAll()
 }
 
@@ -139,54 +138,42 @@ formWindowAddElement.addEventListener('submit', formSubmitHandlerAdd);
 
 //функционал удаления карточек
 
-function alldeleticon() {
-  const butoonDeletIcon = document.querySelectorAll('.element__delet-icon').forEach((button) => {
-    button.addEventListener('click', cardDelet);
-  });
-}
-
 function cardDelet(evt) {
   let button = evt.target;
   let cardDeletElement = button.closest('.element');
   cardDeletElement.remove();
 }
-alldeleticon();
+function allDeletIcon() {
+  const butoonDeletIcon = document.querySelectorAll('.element__delet-icon').forEach((button) => {
+    button.addEventListener('click', cardDelet);
+  });
+}
+allDeletIcon();
 
- //просмотр картинок popup
+//просмотр картинок popup
 
-/*const closingIconPopup = document.querySelectorAll('.popup__closing-icon').forEach((button)=>{
-  button.addEventListener('click', closePopup);
-})
-
-function closePopup(evt) {
-  let button = evt.target;
-  let closingPopup = button.closest('.popup');
-  closingPopup.classList.remove('popup_opened')
-}*/
-
-function openWindowsVievAll() {const openViev = document.querySelectorAll('.element__image').forEach((button)=>{
-  button.addEventListener('click', openWindowViev);
-});}
-
+const popupWindowViev = document.querySelector('.popup_window_viev');
+const closeIconWindowViev = popupWindowViev.querySelector('.popup__closing-icon');
+closeIconWindowViev.addEventListener('click', () => {
+  popupWindowViev.classList.remove('popup_opened');
+});
 
 function openWindowViev(evt) {
   let button = evt.target;
   const vievImageElement = button.closest('.element__image');
-  let popapContainerViev = document.querySelector('.popup__container-viev');
+  let popapContainerViev = document.querySelector('.popup__image');
   const vievElement = button.closest('.element');
   const vievTitleElement = vievElement.querySelector('.element__title');
-  let popupTitleViev = document.querySelector('.popup__title-viev');
-  let openPopupViev = document.querySelector('.popup_window_viev');
-
+  const popupTitleViev = document.querySelector('.popup__title-viev');
+  const openPopupViev = document.querySelector('.popup_window_viev');
   popupTitleViev.textContent = vievTitleElement.textContent;
-  popapContainerViev.style.backgroundImage = vievImageElement.style.backgroundImage;
+  popapContainerViev.src = vievImageElement.style.backgroundImage.slice(5, -2);
   openPopupViev.classList.add('popup_opened');
 }
+function openWindowsVievAll() {
+  const openViev = document.querySelectorAll('.element__image').forEach((button) => {
+    button.addEventListener('click', openWindowViev);
+  });
+}
+
 openWindowsVievAll()
-
-const popupWindowViev = document.querySelector('.popup_window_viev');
-const closeIconWindowViev = popupWindowViev.querySelector('.popup__closing-icon');
-closeIconWindowViev.addEventListener('click', ()=> {
-  popupWindowViev.classList.remove('popup_opened');
-});
-
