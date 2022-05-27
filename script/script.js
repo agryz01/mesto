@@ -73,10 +73,11 @@ function openWindowViev(element) {
 //функция вставки эл-та
 
 function pasteElement(card) {
+  const newElement = renderItem(card);
   if (markFormAdd !== 0) {
-    cardListElements.prepend(card);
+    cardListElements.prepend(newElement);
   } else {
-    cardListElements.append(card);
+    cardListElements.append(newElement);
   }
 }
 
@@ -109,11 +110,7 @@ function renderItem(element) {
   buttonFavorit.addEventListener('click', handleCardFavourites);
   buttonDeletIcon.addEventListener('click', handleCardDelete);
   openViev.addEventListener('click', ()=> openWindowViev(element));
-  pasteElement(listElement);
-}
-
-function renderList(data) {
-  data.forEach(item => renderItem(item));
+  return listElement;
 }
 
 //функционал добавления карточки
@@ -127,10 +124,10 @@ function handleAddCardFormSubmit(evt) {
     }
   ];
   markFormAdd = 1;
-  renderList(newCard);
+  newCard.forEach((item)=>{pasteElement(item)});
   closePopup(popupWindowAdd);
 }
 
-renderList(initialCards);
+initialCards.forEach((item)=>{pasteElement(item)});
 formWindowEditElement.addEventListener('submit', handleProfileFormSubmit);
 formWindowAddElement.addEventListener('submit', handleAddCardFormSubmit);
