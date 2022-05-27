@@ -13,6 +13,11 @@ const urlPlace = popupWindowAdd.querySelector('.popup__input-text_input_url');
 const formWindowAddElement = popupWindowAdd.querySelector('.popup__container');
 const cardListElements = document.querySelector('.elements');
 const popupWindowViev = document.querySelector('.popup_window_viev');
+const templateElement = document.querySelector('.template-element').content;
+const popapContainerViev = document.querySelector('.popup__image');
+const popupTitleViev = document.querySelector('.popup__title-viev');
+const openPopupViev = document.querySelector('.popup_window_viev');
+
 let markFormAdd = 0; 
 
 //функция открытия popup
@@ -27,7 +32,7 @@ function closePopup(popup) {
   popup.classList.remove('popup_opened');
 }
 
-const closingIconPopup = document.querySelectorAll('.popup__closing-icon').forEach(function (button) {
+document.querySelectorAll('.popup__closing-icon').forEach(function (button) {
   button.addEventListener('click', function (evt) {
     const popup = evt.target.closest('.popup_opened');
     closePopup(popup);
@@ -58,17 +63,10 @@ addButon.addEventListener('click', function () {
 
 //просмотр картинок popup
 
-function openWindowViev(evt) {
-  const button = evt.target;
-  const vievImageElement = button.closest('.element__image');
-  const popapContainerViev = document.querySelector('.popup__image');
-  const vievElement = button.closest('.element');
-  const vievTitleElement = vievElement.querySelector('.element__title');
-  const popupTitleViev = document.querySelector('.popup__title-viev');
-  const openPopupViev = document.querySelector('.popup_window_viev');
-  popupTitleViev.textContent = vievTitleElement.textContent;
-  popapContainerViev.src = vievImageElement.style.backgroundImage.slice(5, -2);
-  popapContainerViev.alt = `картинка "${popupTitleViev.textContent}" в полный размер.`;
+function openWindowViev(element) {
+  popupTitleViev.textContent = element.name;
+  popapContainerViev.src = element.link
+  popapContainerViev.alt = `картинка "${element.name}" в полный размер.`;
   openPopup(openPopupViev);
 }
 
@@ -84,10 +82,9 @@ function pasteElement(card) {
 
 //реализация лайков
 
-function switchingFavourites(evt) {
+function handleCardFavourites(evt) {
   const button = evt.target;
-  const favoritElement = button.closest('.element__favourites');
-  favoritElement.classList.toggle('element__favourites_active');
+  button.classList.toggle('element__favourites_active');
 }
 
 //функционал удаления карточек
@@ -101,7 +98,6 @@ function handleCardDelete(evt) {
 //рендеринг
 
 function renderItem(element) {
-  const templateElement = document.querySelector('.template-element').content;
   const listElement = templateElement.cloneNode(true);
   const titleElement = listElement.querySelector('.element__title');
   const imageElement = listElement.querySelector('.element__image');
@@ -110,9 +106,9 @@ function renderItem(element) {
   const openViev = listElement.querySelector('.element__image');
   titleElement.textContent = element.name;
   imageElement.style = `background-image: url(${element.link});`;
-  buttonFavorit.addEventListener('click', switchingFavourites);
+  buttonFavorit.addEventListener('click', handleCardFavourites);
   buttonDeletIcon.addEventListener('click', handleCardDelete);
-  openViev.addEventListener('click', openWindowViev);
+  openViev.addEventListener('click', ()=> openWindowViev(element));
   pasteElement(listElement);
 }
 
