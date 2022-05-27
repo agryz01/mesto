@@ -17,7 +17,6 @@ const templateElement = document.querySelector('.template-element').content;
 const popapContainerViev = document.querySelector('.popup__image');
 const popupTitleViev = document.querySelector('.popup__title-viev');
 const openPopupViev = document.querySelector('.popup_window_viev');
-
 let markFormAdd = 0; 
 
 //функция открытия popup
@@ -113,6 +112,10 @@ function renderItem(element) {
   return listElement;
 }
 
+function renderList(data) {
+  data.forEach(item => pasteElement(item));
+} 
+
 //функционал добавления карточки
 
 function handleAddCardFormSubmit(evt) {
@@ -124,10 +127,10 @@ function handleAddCardFormSubmit(evt) {
     }
   ];
   markFormAdd = 1;
-  newCard.forEach((item)=>{pasteElement(item)});
+  renderList(newCard);
   closePopup(popupWindowAdd);
 }
 
-initialCards.forEach((item)=>{pasteElement(item)});
+renderList(initialCards);
 formWindowEditElement.addEventListener('submit', handleProfileFormSubmit);
 formWindowAddElement.addEventListener('submit', handleAddCardFormSubmit);
