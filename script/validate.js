@@ -59,5 +59,3 @@ const enableValidation = (formElement) => {
     });
   });
 }
-
-

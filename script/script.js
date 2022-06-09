@@ -19,7 +19,7 @@ const popupTitleViev = document.querySelector('.popup__title-viev');
 const openPopupViev = document.querySelector('.popup_window_viev');
 let markFormAdd = 0;
 
-//функция закрытия popup по крестику
+//функция закрытия popup
 
 function closePopup(popup) {
   document.removeEventListener('keydown', checkEscap);
@@ -28,10 +28,10 @@ function closePopup(popup) {
 
 //закрытие по клику по оверлею
 
-function closeCklicPopup(popupWindow) {
-  popupWindow.addEventListener('click', (evt) => {
+function closeCklicPopup(popup) {
+  popup.addEventListener('click', (evt) => {
     if (!evt.target.classList.contains('popup__container') && evt.target.classList.contains('popup') && evt.target.classList.contains('popup_opened'))
-      closePopup(popupWindow);
+      closePopup(popup);
   });
 }
 
