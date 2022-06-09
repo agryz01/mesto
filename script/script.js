@@ -23,6 +23,14 @@ let markFormAdd = 0;
 
 function closePopup(popup) {
   document.removeEventListener('keydown', checkEscap);
+  const errorList = Array.from(popup.querySelectorAll('.popup__input-error'));
+  errorList.forEach((errorElement) => {
+    errorElement.textContent = '';
+  });
+  const inputList = Array.from(popup.querySelectorAll('.popup__input-text'));
+  inputList.forEach((inputElement) => {
+    inputElement.classList.remove('popup__input-text_error');
+  });
   popup.classList.remove('popup_opened');
 }
 
