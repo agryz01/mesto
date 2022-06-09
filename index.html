@@ -31,28 +31,43 @@
   <footer class="footer">
     <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
   </footer>
+
   <div class="popup popup_window_edit">
-    <form name="profileedit" method="post" class="popup__container">
+    <form name="profileedit" method="post" novalidate class="popup__container">
       <button type="button" class="popup__closing-icon"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
-      <input type="text" name="yourname" type="text" minlength="2" maxlength="40" required placeholder="Как вас зовут?"
-        class="popup__input-text popup__input-text_input_name">
-      <input type="text" name="yourjob" placeholder="Чем вы занимаетесь?"
-        class="popup__input-text popup__input-text_input_activity">
+      <label class="popup__field">
+        <input type="text" name="yourname" id="name-input" type="text" minlength="2" maxlength="40" required
+          placeholder="Как вас зовут?" class="popup__input-text popup__input-text_input_name">
+        <span class="popup__input-error name-input-error"></span>
+      </label>
+      <label class="popup__field">
+        <input type="text" name="yourjob" id="activity-input" type="text" minlength="2" maxlength="200" required
+          placeholder="Чем вы занимаетесь?" class="popup__input-text popup__input-text_input_activity">
+        <span class="popup__input-error activity-input-error"></span>
+      </label>
       <button type="submit" class="popup__button">Сохранить</button>
     </form>
   </div>
+
   <div class="popup popup_window_add">
-    <form name="placesadd" method="post" class="popup__container">
+    <form name="placesadd" method="post" novalidate class="popup__container">
       <button type="button" class="popup__closing-icon"></button>
       <h2 class="popup__title">Новое место</h2>
-      <input type="text" name="placename" placeholder="Название"
+      <label class="popup__field">
+        <input type="text" name="placename" id="place-input" minlength="2" maxlength="30" required placeholder="Название"
         class="popup__input-text popup__input-text_input_place">
-      <input type="text" name="placeurl" placeholder="ссылка на картинку"
+        <span class="popup__input-error place-input-error"></span>
+      </label>
+      <label class="popup__field">
+        <input type="url" name="placeurl" id="url-input"  required placeholder="ссылка на картинку"
         class="popup__input-text popup__input-text_input_url">
+        <span class="popup__input-error url-input-error"></span>
+      </label>      
       <button type="submit" class="popup__button">Создать</button>
     </form>
   </div>
+
   <div class="popup popup_window_viev">
     <div class="popup__container-viev">
       <img src="./images/kirill-pershin-1088404-unsplash.jpg" alt="картинка в полный размер." class="popup__image">

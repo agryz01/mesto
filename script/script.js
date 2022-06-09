@@ -44,6 +44,7 @@ editButton.addEventListener('click', function () {
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileSubtitle.textContent;
   openPopup(popupWindowEdit);
+  setEventListeners(popupWindowEdit);
 });
 
 function handleProfileFormSubmit(evt) {
@@ -58,6 +59,7 @@ function handleProfileFormSubmit(evt) {
 addButon.addEventListener('click', function () {
   formWindowAddElement.reset();
   openPopup(popupWindowAdd);
+  setEventListeners(popupWindowAdd);
 });
 
 //просмотр картинок popup
