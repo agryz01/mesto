@@ -17,18 +17,40 @@ const templateElement = document.querySelector('.template-element').content;
 const popapContainerViev = document.querySelector('.popup__image');
 const popupTitleViev = document.querySelector('.popup__title-viev');
 const openPopupViev = document.querySelector('.popup_window_viev');
-let markFormAdd = 0; 
+let markFormAdd = 0;
+
+//функция закрытия popup по крестику
+
+function closePopup(popup) {
+  document.removeEventListener('keydown', checkEscap);
+  popup.classList.remove('popup_opened');
+}
+
+//закрытие по клику по оверлею
+
+function closeCklicPopup(popupWindow) {
+  popupWindow.addEventListener('click', (evt) => {
+    if (!evt.target.classList.contains('popup__container') && evt.target.classList.contains('popup') && evt.target.classList.contains('popup_opened'))
+      closePopup(popupWindow);
+  });
+}
+
+//закрытие по клавише Escap
+
+function checkEscap(evt) {
+    
+    if (evt.key === 'Escape') {
+      const popup = document.querySelector('.popup_opened');
+      closePopup(popup);
+    }
+  }
 
 //функция открытия popup
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-}
-
-//функция закрытия popup
-
-function closePopup(popup) {
-  popup.classList.remove('popup_opened');
+  document.addEventListener('keydown', checkEscap);
+  closeCklicPopup(popup);
 }
 
 document.querySelectorAll('.popup__closing-icon').forEach(function (button) {
@@ -110,13 +132,13 @@ function renderItem(element) {
   imageElement.style = `background-image: url(${element.link});`;
   buttonFavorit.addEventListener('click', handleCardFavourites);
   buttonDeletIcon.addEventListener('click', handleCardDelete);
-  openViev.addEventListener('click', ()=> openWindowViev(element));
+  openViev.addEventListener('click', () => openWindowViev(element));
   return listElement;
 }
 
 function renderList(data) {
   data.forEach(item => pasteElement(item));
-} 
+}
 
 //функционал добавления карточки
 
