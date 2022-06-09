@@ -2,7 +2,6 @@
   visibility: hidden;
   opacity: 0;
   transition: visibility .3s, opacity .3s;
-  position: absolute;
   top: calc(100% + 5px);
   left: 0;
   font-size: 12px;
