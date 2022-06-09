@@ -18,7 +18,7 @@ const hideInputError = (formElement, inputElement) => {
 
 // переключатель отображения ошибки
 
-const enableValidation = (formElement, inputElement) => {
+const checkInputValidity = (formElement, inputElement) => {
   if (!inputElement.validity.valid) {
     showInputError(formElement, inputElement, inputElement.validationMessage);
   } else {
@@ -48,14 +48,14 @@ function toggleButtonState(inputList, buttonElement) {
 
 //функция валидации, принимает на вход форму
 
-const setEventListeners = (formElement) => {
+const enableValidation = (formElement) => {
   inputList = Array.from(formElement.querySelectorAll('.popup__input-text'));
   const buttonElement = formElement.querySelector('.popup__button');
   toggleButtonState(inputList, buttonElement);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', function () {
       toggleButtonState(inputList, buttonElement);
-      enableValidation(formElement, inputElement);
+      checkInputValidity(formElement, inputElement);
     });
   });
 }

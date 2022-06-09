@@ -37,8 +37,7 @@ function closeCklicPopup(popupWindow) {
 
 //закрытие по клавише Escap
 
-function checkEscap(evt) {
-    
+function checkEscap(evt) {    
     if (evt.key === 'Escape') {
       const popup = document.querySelector('.popup_opened');
       closePopup(popup);
@@ -66,7 +65,7 @@ editButton.addEventListener('click', function () {
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileSubtitle.textContent;
   openPopup(popupWindowEdit);
-  setEventListeners(popupWindowEdit);
+  enableValidation(popupWindowEdit);
 });
 
 function handleProfileFormSubmit(evt) {
@@ -81,7 +80,7 @@ function handleProfileFormSubmit(evt) {
 addButon.addEventListener('click', function () {
   formWindowAddElement.reset();
   openPopup(popupWindowAdd);
-  setEventListeners(popupWindowAdd);
+  enableValidation(popupWindowAdd);
 });
 
 //просмотр картинок popup
