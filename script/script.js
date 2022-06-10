@@ -1,6 +1,5 @@
 const editButton = document.querySelector('.profile__edit-button');
 const popupWindowEdit = document.querySelector('.popup_window_edit');
-const closingIconWindowEdit = popupWindowEdit.querySelector('.popup__closing-icon');
 const formWindowEditElement = popupWindowEdit.querySelector('.popup__container');
 const nameInput = popupWindowEdit.querySelector('.popup__input-text_input_name');
 const jobInput = popupWindowEdit.querySelector('.popup__input-text_input_activity');
@@ -17,12 +16,12 @@ const templateElement = document.querySelector('.template-element').content;
 const popapContainerViev = document.querySelector('.popup__image');
 const popupTitleViev = document.querySelector('.popup__title-viev');
 const openPopupViev = document.querySelector('.popup_window_viev');
+const popupList = Array.from(document.querySelectorAll('.popup'));
 let markFormAdd = 0;
 
-//функция закрытия popup
+// сброс валидации полей
 
-function closePopup(popup) {
-  document.removeEventListener('keydown', checkEscap);
+function resetValidation(popup) {
   const errorList = Array.from(popup.querySelectorAll('.popup__input-error'));
   errorList.forEach((errorElement) => {
     errorElement.textContent = '';
@@ -31,21 +30,18 @@ function closePopup(popup) {
   inputList.forEach((inputElement) => {
     inputElement.classList.remove('popup__input-text_error');
   });
+}
+
+//функция закрытия popup
+
+function closePopup(popup) {
+  document.removeEventListener('keydown', handleEscKey);
   popup.classList.remove('popup_opened');
 }
 
-//закрытие по клику по оверлею
+//обработка нажатия клавиши Escap
 
-function closeCklicPopup(popup) {
-  popup.addEventListener('click', (evt) => {
-    if (!evt.target.classList.contains('popup__container') && evt.target.classList.contains('popup') && evt.target.classList.contains('popup_opened'))
-      closePopup(popup);
-  });
-}
-
-//закрытие по клавише Escap
-
-function checkEscap(evt) {    
+function handleEscKey(evt) {    
     if (evt.key === 'Escape') {
       const popup = document.querySelector('.popup_opened');
       closePopup(popup);
@@ -56,16 +52,9 @@ function checkEscap(evt) {
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-  document.addEventListener('keydown', checkEscap);
-  closeCklicPopup(popup);
+  document.addEventListener('keydown', handleEscKey);
+  //closeCklicPopup(popup);
 }
-
-document.querySelectorAll('.popup__closing-icon').forEach(function (button) {
-  button.addEventListener('click', function (evt) {
-    const popup = evt.target.closest('.popup_opened');
-    closePopup(popup);
-  })
-})
 
 //editpopup
 
@@ -73,6 +62,7 @@ editButton.addEventListener('click', function () {
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileSubtitle.textContent;
   openPopup(popupWindowEdit);
+  resetValidation(popupWindowEdit);
   enableValidation(popupWindowEdit);
 });
 
@@ -88,6 +78,7 @@ function handleProfileFormSubmit(evt) {
 addButon.addEventListener('click', function () {
   formWindowAddElement.reset();
   openPopup(popupWindowAdd);
+  resetValidation(popupWindowAdd);
   enableValidation(popupWindowAdd);
 });
 
@@ -134,17 +125,16 @@ function renderItem(element) {
   const imageElement = listElement.querySelector('.element__image');
   const buttonFavorit = listElement.querySelector('.element__favourites');
   const buttonDeletIcon = listElement.querySelector('.element__delet-icon');
-  const openViev = listElement.querySelector('.element__image');
   titleElement.textContent = element.name;
   imageElement.style = `background-image: url(${element.link});`;
   buttonFavorit.addEventListener('click', handleCardFavourites);
   buttonDeletIcon.addEventListener('click', handleCardDelete);
-  openViev.addEventListener('click', () => openWindowViev(element));
+  imageElement.addEventListener('click', () => openWindowViev(element));
   return listElement;
 }
 
 function renderList(data) {
-  data.forEach(item => pasteElement(item));
+  data.forEach(pasteElement);
 }
 
 //функционал добавления карточки
@@ -165,3 +155,13 @@ function handleAddCardFormSubmit(evt) {
 renderList(initialCards);
 formWindowEditElement.addEventListener('submit', handleProfileFormSubmit);
 formWindowAddElement.addEventListener('submit', handleAddCardFormSubmit);
+
+//слушатели закрытия по клику по оверлею или крестику всех попапов
+
+popupList.forEach((popup) => {
+  popup.addEventListener('mousedown', (evt) => {
+    if ((evt.target.classList.contains('popup_opened')) || (evt.target.classList.contains('popup__closing-icon'))) {
+      closePopup(popup);
+    }
+  });
+})
