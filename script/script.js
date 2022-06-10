@@ -53,7 +53,6 @@ function handleEscKey(evt) {
 function openPopup(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', handleEscKey);
-  //closeCklicPopup(popup);
 }
 
 //editpopup
@@ -63,7 +62,6 @@ editButton.addEventListener('click', function () {
   jobInput.value = profileSubtitle.textContent;
   openPopup(popupWindowEdit);
   resetValidation(popupWindowEdit);
-  enableValidation(popupWindowEdit);
 });
 
 function handleProfileFormSubmit(evt) {
@@ -79,7 +77,6 @@ addButon.addEventListener('click', function () {
   formWindowAddElement.reset();
   openPopup(popupWindowAdd);
   resetValidation(popupWindowAdd);
-  enableValidation(popupWindowAdd);
 });
 
 //просмотр картинок popup
