@@ -62,7 +62,10 @@ editButton.addEventListener('click', function () {
   jobInput.value = profileSubtitle.textContent;
   openPopup(popupWindowEdit);
   resetValidation(popupWindowEdit);
+  // setEventListener(popupWindowEdit);
 });
+
+// редактирование профиля
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
@@ -77,6 +80,7 @@ addButon.addEventListener('click', function () {
   formWindowAddElement.reset();
   openPopup(popupWindowAdd);
   resetValidation(popupWindowAdd);
+  // setEventListener(popupWindowAdd);
 });
 
 //просмотр картинок popup
@@ -162,3 +166,12 @@ popupList.forEach((popup) => {
     }
   });
 })
+
+enableValidation({
+  formSelector: '.popup__container',
+  inputSelector: '.popup__input-text',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input-text_error',
+  errorClass: 'popup__input-error_active'
+}); 
