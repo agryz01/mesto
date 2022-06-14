@@ -39,21 +39,19 @@ function hasInvalidInput(inputList) {
 function toggleButtonState(inputList, buttonElement, object) {
   if (hasInvalidInput(inputList)) {
     buttonElement.classList.add(object.inactiveButtonClass);
-    buttonElement.disabled = 'disabled';    
-    console.log('кнопка выключена', buttonElement);
+    buttonElement.disabled = 'disabled';
   } else {
     buttonElement.classList.remove(object.inactiveButtonClass);
     buttonElement.disabled = '';
-    console.log('кнопка активна', buttonElement);
   }
 }
 
 //валидация
 
 const setEventListeners = (formElement, object) => {
-  inputList = Array.from(formElement.querySelectorAll(object.inputSelector));
+  const inputList = Array.from(formElement.querySelectorAll(object.inputSelector));
   const buttonElement = formElement.querySelector(object.submitButtonSelector);
-  toggleButtonState(inputList, buttonElement, object);
+  //toggleButtonState(inputList, buttonElement, object);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', function () {
       toggleButtonState(inputList, buttonElement, object);
@@ -68,12 +66,3 @@ const enableValidation = (object) => {
     setEventListeners(formElement, object);
   })
 }
-
-// enableValidation({
-//   formSelector: '.popup__container',
-//   inputSelector: '.popup__input-text',
-//   submitButtonSelector: '.popup__button',
-//   inactiveButtonClass: 'popup__button_disabled',
-//   inputErrorClass: 'popup__input-text_error',
-//   errorClass: 'popup__input-error_active'
-// }); 

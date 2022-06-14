@@ -18,8 +18,16 @@ const popupTitleViev = document.querySelector('.popup__title-viev');
 const openPopupViev = document.querySelector('.popup_window_viev');
 const popupList = Array.from(document.querySelectorAll('.popup'));
 let markFormAdd = 0;
+const config = {
+  formSelector: '.popup__container',
+  inputSelector: '.popup__input-text',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input-text_error',
+  errorClass: 'popup__input-error_active'
+};
 
-// сброс валидации полей
+// сброс отображения валидации полей
 
 function resetValidation(popup) {
   const errorList = Array.from(popup.querySelectorAll('.popup__input-error'));
@@ -41,17 +49,20 @@ function closePopup(popup) {
 
 //обработка нажатия клавиши Escap
 
-function handleEscKey(evt) {    
-    if (evt.key === 'Escape') {
-      const popup = document.querySelector('.popup_opened');
-      closePopup(popup);
-    }
+function handleEscKey(evt) {
+  if (evt.key === 'Escape') {
+    const popup = document.querySelector('.popup_opened');
+    closePopup(popup);
   }
+}
 
 //функция открытия popup
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  const inputList = Array.from(popup.querySelectorAll('.popup__input-text'));
+  const buttonElement = popup.querySelector('.popup__button');
+  toggleButtonState(inputList, buttonElement, config);
   document.addEventListener('keydown', handleEscKey);
 }
 
@@ -62,7 +73,6 @@ editButton.addEventListener('click', function () {
   jobInput.value = profileSubtitle.textContent;
   openPopup(popupWindowEdit);
   resetValidation(popupWindowEdit);
-  // setEventListener(popupWindowEdit);
 });
 
 // редактирование профиля
@@ -80,7 +90,6 @@ addButon.addEventListener('click', function () {
   formWindowAddElement.reset();
   openPopup(popupWindowAdd);
   resetValidation(popupWindowAdd);
-  // setEventListener(popupWindowAdd);
 });
 
 //просмотр картинок popup
@@ -167,11 +176,4 @@ popupList.forEach((popup) => {
   });
 })
 
-enableValidation({
-  formSelector: '.popup__container',
-  inputSelector: '.popup__input-text',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input-text_error',
-  errorClass: 'popup__input-error_active'
-}); 
+enableValidation(config);
