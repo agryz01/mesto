@@ -60,9 +60,9 @@ function handleEscKey(evt) {
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-  const inputList = Array.from(popup.querySelectorAll('.popup__input-text'));
-  const buttonElement = popup.querySelector('.popup__button');
-  toggleButtonState(inputList, buttonElement, config);
+  // const inputList = Array.from(popup.querySelectorAll('.popup__input-text'));
+  // const buttonElement = popup.querySelector('.popup__button');
+  // toggleButtonState(inputList, buttonElement, config);
   document.addEventListener('keydown', handleEscKey);
 }
 
@@ -88,6 +88,9 @@ function handleProfileFormSubmit(evt) {
 
 addButon.addEventListener('click', function () {
   formWindowAddElement.reset();
+  const inputList = Array.from(popupWindowAdd.querySelectorAll('.popup__input-text'));
+  const buttonElement = popupWindowAdd.querySelector('.popup__button');
+  toggleButtonState(inputList, buttonElement, config);
   openPopup(popupWindowAdd);
   resetValidation(popupWindowAdd);
 });
