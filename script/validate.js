@@ -65,3 +65,5 @@ const enableValidation = (object) => {
     setEventListeners(formElement, object);
   })
 }
+
+export {enableValidation, toggleButtonState}

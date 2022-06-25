@@ -1,3 +1,7 @@
+import { initialCards } from "./cards.js";
+import { enableValidation, toggleButtonState } from "./validate.js";
+import { Card } from "./_card.js";
+
 const editButton = document.querySelector('.profile__edit-button');
 const popupWindowEdit = document.querySelector('.popup_window_edit');
 const formWindowEditElement = popupWindowEdit.querySelector('.popup__container');
@@ -26,6 +30,8 @@ const config = {
   inputErrorClass: 'popup__input-text_error',
   errorClass: 'popup__input-error_active'
 };
+
+const cardSelector = '.template-element';
 
 // сброс отображения валидации полей
 
@@ -94,17 +100,38 @@ addButon.addEventListener('click', function () {
 
 //просмотр картинок popup
 
-function openWindowViev(element) {
-  popupTitleViev.textContent = element.name;
-  popapContainerViev.src = element.link
-  popapContainerViev.alt = `картинка "${element.name}" в полный размер.`;
-  openPopup(openPopupViev);
-}
+// function openWindowViev(element) {
+//   popupTitleViev.textContent = element.name;
+//   popapContainerViev.src = element.link
+//   popapContainerViev.alt = `картинка "${element.name}" в полный размер.`;
+//   openPopup(openPopupViev);
+// }
+
+document.addEventListener('click', (evt) => {
+  if (evt.target.classList.contains('element__image')) {
+    const button = evt.target;
+    const element = button.closest('.element');
+    popapContainerViev.src = element.querySelector('.element__image').style.backgroundImage.slice(5, -2);
+    const elementTitle =  element.querySelector('.element__title').textContent;
+    popupTitleViev.textContent = elementTitle;
+    popapContainerViev.alt = `картинка "${elementTitle}" в полный размер.`;
+    openPopup(openPopupViev);
+  }
+})
 
 //функция вставки эл-та
 
+// function pasteElement(card) {
+//   const newElement = renderItem(card);
+//   if (markFormAdd !== 0) {
+//     cardListElements.prepend(newElement);
+//   } else {
+//     cardListElements.append(newElement);
+//   }
+// }
+
 function pasteElement(card) {
-  const newElement = renderItem(card);
+  const newElement = new Card(card, cardSelector).getTemplate();
   if (markFormAdd !== 0) {
     cardListElements.prepend(newElement);
   } else {
