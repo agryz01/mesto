@@ -190,5 +190,4 @@ popupList.forEach((popup) => {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
   formList.forEach((formElement) => {
    const formValidator = new FormValidator(config, formElement).enableValidation();
-   console.log(formValidator);
   });
