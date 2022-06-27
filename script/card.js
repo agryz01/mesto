@@ -1,4 +1,4 @@
-class Card {
+export class Card {
   constructor(cardElement, cardSelector) {
     this._name = cardElement.name;
     this._link = cardElement.link;
@@ -13,12 +13,6 @@ class Card {
     const cardDeletElement = button.closest('.element');
     cardDeletElement.remove();
   }
-  // _openWindowViev(cardElement) {
-  //   popupTitleViev.textContent = cardElement.name;
-  //   popapContainerViev.src = cardElement.link
-  //   popapContainerViev.alt = `картинка "${cardElement.name}" в полный размер.`;
-  //   openPopup(openPopupViev);
-  // }
 
   getTemplate() {
     const listElement = document.querySelector(this._cardSelector).content.cloneNode(true);
@@ -30,8 +24,6 @@ class Card {
     imageElement.style = `background-image: url(${this._link});`;
     buttonFavorit.addEventListener('click', this._handleCardFavourites);
     buttonDeletIcon.addEventListener('click', this._handleCardDelete);
-    //imageElement.addEventListener('click', () => this._openWindowViev(cardElement));
     return listElement;
   }
 }
-export { Card };
