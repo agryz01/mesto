@@ -4,11 +4,11 @@ class Card {
     this._link = cardElement.link;
     this._cardSelector = cardSelector;
   }
-  _handleCardFavourites(evt) {
+  _handleCardFavourites = (evt) => {
     const button = evt.target;
     button.classList.toggle('element__favourites_active');
   }
-  _handleCardDelete(evt) {
+  _handleCardDelete = (evt) => {
     const button = evt.target;
     const cardDeletElement = button.closest('.element');
     cardDeletElement.remove();

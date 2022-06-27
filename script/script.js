@@ -1,6 +1,7 @@
 import { initialCards } from "./cards.js";
 import { enableValidation, toggleButtonState } from "./validate.js";
 import { Card } from "./_card.js";
+import { FormValidator } from "./_validate.js";
 
 const editButton = document.querySelector('.profile__edit-button');
 const popupWindowEdit = document.querySelector('.popup_window_edit');
@@ -203,4 +204,8 @@ popupList.forEach((popup) => {
   });
 })
 
-enableValidation(config);
+// enableValidation(config);
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
+  formList.forEach((formElement) => {
+   const formValidator = new FormValidator(config, formElement).enableValidation();
+  })
