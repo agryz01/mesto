@@ -1,3 +1,4 @@
+import { initialCards, config } from "./data.js";
 import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
 
@@ -16,46 +17,10 @@ const formWindowAddElement = popupWindowAdd.querySelector('.popup__container');
 const cardListElements = document.querySelector('.elements');
 const popapContainerViev = document.querySelector('.popup__image');
 const popupTitleViev = document.querySelector('.popup__title-viev');
-const openPopupViev = document.querySelector('.popup_window_viev');
+const popupImageViev = document.querySelector('.popup_window_viev');
 const popupList = Array.from(document.querySelectorAll('.popup'));
 const cardSelector = '.template-element';
 let markFormAdd = false;
-
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
-const config = {
-  formSelector: '.popup__container',
-  inputSelector: '.popup__input-text',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input-text_error',
-  errorClass: 'popup__input-error_active'
-};
 
 // сброс отображения валидации полей
 
@@ -132,23 +97,25 @@ document.addEventListener('click', (evt) => {
     const elementTitle =  element.querySelector('.element__title').textContent;
     popupTitleViev.textContent = elementTitle;
     popapContainerViev.alt = `картинка "${elementTitle}" в полный размер.`;
-    openPopup(openPopupViev);
+    openPopup(popupImageViev);
   }
 })
 
 //функция вставки эл-та
 
 function pasteElement(card) {
-  const newElement = new Card(card, cardSelector).getTemplate();
   if (markFormAdd) {
-    cardListElements.prepend(newElement);
+    cardListElements.prepend(card);
   } else {
-    cardListElements.append(newElement);
+    cardListElements.append(card);
   }
 }
 
 function renderList(data) {
-  data.forEach(pasteElement);
+  data.forEach((item) => {
+    const newElement = new Card(item, cardSelector).getTemplate();
+    pasteElement(newElement);
+  });
 }
 
 //функционал добавления карточки
