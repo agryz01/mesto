@@ -24,16 +24,16 @@ let markFormAdd = false;
 
 // сброс отображения валидации полей
 
-function resetValidation(popup) {
-  const errorList = Array.from(popup.querySelectorAll('.popup__input-error'));
-  errorList.forEach((errorElement) => {
-    errorElement.textContent = '';
-  });
-  const inputList = Array.from(popup.querySelectorAll('.popup__input-text'));
-  inputList.forEach((inputElement) => {
-    inputElement.classList.remove('popup__input-text_error');
-  });
-}
+// function resetValidation(popup) {
+//   const errorList = Array.from(popup.querySelectorAll('.popup__input-error'));
+//   errorList.forEach((errorElement) => {
+//     errorElement.textContent = '';
+//   });
+//   const inputList = Array.from(popup.querySelectorAll('.popup__input-text'));
+//   inputList.forEach((inputElement) => {
+//     inputElement.classList.remove('popup__input-text_error');
+//   });
+// }
 
 //функция закрытия popup
 
@@ -64,7 +64,13 @@ editButton.addEventListener('click', function () {
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileSubtitle.textContent;
   openPopup(popupWindowEdit);
-  resetValidation(popupWindowEdit);
+
+  // const obj = {
+  //   popupInputError: '.popup__input-error',
+  //   inputSelector: '.popup__input-text',
+  //   inputErrorClass: 'popup__input-text_error'
+  // }
+  FormValidator.resetValidation(popupWindowEdit, config);
 });
 
 // редактирование профиля
@@ -84,7 +90,13 @@ addButon.addEventListener('click', function () {
   buttonElement.classList.add('popup__button_disabled');
   buttonElement.disabled = 'disabled'; // отключили кнопку
   openPopup(popupWindowAdd);
-  resetValidation(popupWindowAdd);
+
+  // const obj = {
+  //   popupInputError: '.popup__input-error',
+  //   inputSelector: '.popup__input-text',
+  //   inputErrorClass: 'popup__input-text_error'
+  // }
+  // FormValidator.resetValidation(popupWindowAdd, obj);
 });
 
 // открытие попапа просмотра
@@ -158,3 +170,5 @@ popupList.forEach((popup) => {
   formList.forEach((formElement) => {
    const formValidator = new FormValidator(config, formElement).enableValidation();
   });
+
+  // FormValidator.resetValidation(config, popupWindowAdd);

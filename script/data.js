@@ -34,4 +34,4 @@ const config = {
   errorClass: 'popup__input-error_active'
 };
 
-export {initialCards, config};
+export { initialCards, config };
