@@ -17,23 +17,13 @@ const formWindowAddElement = popupWindowAdd.querySelector('.popup__container');
 const cardListElements = document.querySelector('.elements');
 const popapContainerViev = document.querySelector('.popup__image');
 const popupTitleViev = document.querySelector('.popup__title-viev');
-const popupImageViev = document.querySelector('.popup_window_viev');
+const popapWindowViev = document.querySelector('.popup_window_viev');
 const popupList = Array.from(document.querySelectorAll('.popup'));
 const cardSelector = '.template-element';
 let markFormAdd = false;
 
-// сброс отображения валидации полей
-
-// function resetValidation(popup) {
-//   const errorList = Array.from(popup.querySelectorAll('.popup__input-error'));
-//   errorList.forEach((errorElement) => {
-//     errorElement.textContent = '';
-//   });
-//   const inputList = Array.from(popup.querySelectorAll('.popup__input-text'));
-//   inputList.forEach((inputElement) => {
-//     inputElement.classList.remove('popup__input-text_error');
-//   });
-// }
+const popupWindowEditValidator = new FormValidator(config, popupWindowEdit);
+const popupWindowAddValidator = new FormValidator(config, popupWindowAdd);
 
 //функция закрытия popup
 
@@ -64,13 +54,7 @@ editButton.addEventListener('click', function () {
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileSubtitle.textContent;
   openPopup(popupWindowEdit);
-
-  // const obj = {
-  //   popupInputError: '.popup__input-error',
-  //   inputSelector: '.popup__input-text',
-  //   inputErrorClass: 'popup__input-text_error'
-  // }
-  FormValidator.resetValidation(popupWindowEdit, config);
+  popupWindowEditValidator.resetValidation();
 });
 
 // редактирование профиля
@@ -86,32 +70,18 @@ function handleProfileFormSubmit(evt) {
 
 addButon.addEventListener('click', function () {
   formWindowAddElement.reset(); // сбросили поля
-  const buttonElement = popupWindowAdd.querySelector('.popup__button');
-  buttonElement.classList.add('popup__button_disabled');
-  buttonElement.disabled = 'disabled'; // отключили кнопку
+  popupWindowAddValidator.resetValidation();
   openPopup(popupWindowAdd);
-
-  // const obj = {
-  //   popupInputError: '.popup__input-error',
-  //   inputSelector: '.popup__input-text',
-  //   inputErrorClass: 'popup__input-text_error'
-  // }
-  // FormValidator.resetValidation(popupWindowAdd, obj);
 });
 
 // открытие попапа просмотра
 
-document.addEventListener('click', (evt) => {
-  if (evt.target.classList.contains('element__image')) {
-    const button = evt.target;
-    const element = button.closest('.element');
-    popapContainerViev.src = element.querySelector('.element__image').style.backgroundImage.slice(5, -2);
-    const elementTitle =  element.querySelector('.element__title').textContent;
-    popupTitleViev.textContent = elementTitle;
-    popapContainerViev.alt = `картинка "${elementTitle}" в полный размер.`;
-    openPopup(popupImageViev);
-  }
-})
+const openWindowViev = (name, link) => {
+  popupTitleViev.textContent = name;
+  popapContainerViev.src = link;
+  popapContainerViev.alt = `картинка "${name}" в полный размер.`;
+  openPopup(popapWindowViev);
+}
 
 //функция вставки эл-та
 
@@ -125,7 +95,7 @@ function pasteElement(card) {
 
 function renderList(data) {
   data.forEach((item) => {
-    const newElement = new Card(item, cardSelector).getTemplate();
+    const newElement = new Card(item, cardSelector, {openWindowViev}).getTemplate();
     pasteElement(newElement);
   });
 }
@@ -166,9 +136,5 @@ popupList.forEach((popup) => {
 
 // включаем валидацию
 
-  const formList = Array.from(document.querySelectorAll(config.formSelector));
-  formList.forEach((formElement) => {
-   const formValidator = new FormValidator(config, formElement).enableValidation();
-  });
-
-  // FormValidator.resetValidation(config, popupWindowAdd);
+popupWindowEditValidator.enableValidation();
+popupWindowAddValidator.enableValidation();

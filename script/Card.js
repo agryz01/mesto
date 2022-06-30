@@ -1,8 +1,9 @@
 export class Card {
-  constructor(cardElement, cardSelector) {
+  constructor(cardElement, cardSelector, {openWindowViev}) {
     this._name = cardElement.name;
     this._link = cardElement.link;
     this._cardSelector = cardSelector;
+    this._openWindowViev = openWindowViev;
   }
 
   _handleCardFavourites(buttonFavorit) {
@@ -11,6 +12,16 @@ export class Card {
 
   _handleCardDelete(cardElement) {
     cardElement.remove();
+  }
+
+  _handleWindowViev() {
+    const popapContainerViev = document.querySelector('.popup__image');
+    const popupTitleViev = document.querySelector('.popup__title-viev');
+    const popapWindowViev = document.querySelector('.popup_window_viev');
+    popupTitleViev.textContent = this._name;
+    popapContainerViev.src = this._link;
+    popapContainerViev.alt = `картинка "${this._name}" в полный размер.`;
+    openPopup(popapWindowViev);
   }
 
   getTemplate() {
@@ -27,6 +38,9 @@ export class Card {
     });
     buttonDeletIcon.addEventListener('click', () => {
       this._handleCardDelete(cardElement);
+    });
+    imageElement.addEventListener('click', () => {
+      this._openWindowViev(this._name, this._link);
     });
     return listElement;
   }

@@ -49,23 +49,12 @@ export class FormValidator {
     }
   }
 
-  static resetValidation(popup, obj) {
-    const errorList = Array.from(popup.querySelectorAll(obj.errorClass));
-    console.log(errorList);
-    errorList.forEach((errorElement) => {
-      errorElement.classList.remove(obj.errorClass);
-    });
-    const inputList = Array.from(popup.querySelectorAll(obj.inputSelector));
-    // console.log(inputList);
-    inputList.forEach((inputElement) => {
-      //console.log(inputElement);
-      inputElement.classList.remove(obj.inputErrorClass);
+  resetValidation() {
+    this._inputList.forEach((inputElement) => {
+      this._hideInputError(inputElement);
+      this._toggleButtonState();
     });
   }
-
-  // static resetValidation(configElement, formElement) {
-  //   console.log(configElement, formElement);
-  // }
 
   enableValidation() {
     this._inputList.forEach((inputElement) => {
