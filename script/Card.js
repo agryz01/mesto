@@ -1,9 +1,10 @@
+import { popapContainerViev, popupTitleViev, popapWindowViev } from "./index.js";
 export class Card {
-  constructor(cardElement, cardSelector, {openWindowViev}) {
+  constructor(cardElement, cardSelector, {openPopup}) {
     this._name = cardElement.name;
     this._link = cardElement.link;
-    this._cardSelector = cardSelector;
-    this._openWindowViev = openWindowViev;
+    this._listElement = document.querySelector(cardSelector).content.cloneNode(true);
+    this._openPopup = openPopup;
   }
 
   _handleCardFavourites(buttonFavorit) {
@@ -15,22 +16,18 @@ export class Card {
   }
 
   _handleWindowViev() {
-    const popapContainerViev = document.querySelector('.popup__image');
-    const popupTitleViev = document.querySelector('.popup__title-viev');
-    const popapWindowViev = document.querySelector('.popup_window_viev');
     popupTitleViev.textContent = this._name;
     popapContainerViev.src = this._link;
     popapContainerViev.alt = `картинка "${this._name}" в полный размер.`;
-    openPopup(popapWindowViev);
+    this._openPopup(popapWindowViev);
   }
 
   getTemplate() {
-    const listElement = document.querySelector(this._cardSelector).content.cloneNode(true);
-    const titleElement = listElement.querySelector('.element__title');
-    const imageElement = listElement.querySelector('.element__image');
-    const buttonFavorit = listElement.querySelector('.element__favourites');
-    const buttonDeletIcon = listElement.querySelector('.element__delet-icon');
-    const cardElement = listElement.querySelector('.element');
+    const titleElement = this._listElement.querySelector('.element__title');
+    const imageElement = this._listElement.querySelector('.element__image');
+    const buttonFavorit = this._listElement.querySelector('.element__favourites');
+    const buttonDeletIcon = this._listElement.querySelector('.element__delet-icon');
+    const cardElement = this._listElement.querySelector('.element');
     titleElement.textContent = this._name;
     imageElement.style = `background-image: url(${this._link});`;
     buttonFavorit.addEventListener('click', () => {
@@ -40,8 +37,8 @@ export class Card {
       this._handleCardDelete(cardElement);
     });
     imageElement.addEventListener('click', () => {
-      this._openWindowViev(this._name, this._link);
+      this._handleWindowViev();
     });
-    return listElement;
+    return this._listElement;
   }
 }

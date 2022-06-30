@@ -74,15 +74,6 @@ addButon.addEventListener('click', function () {
   openPopup(popupWindowAdd);
 });
 
-// открытие попапа просмотра
-
-const openWindowViev = (name, link) => {
-  popupTitleViev.textContent = name;
-  popapContainerViev.src = link;
-  popapContainerViev.alt = `картинка "${name}" в полный размер.`;
-  openPopup(popapWindowViev);
-}
-
 //функция вставки эл-та
 
 function pasteElement(card) {
@@ -93,9 +84,13 @@ function pasteElement(card) {
   }
 }
 
+// функция создания экземпляра класса
+
+const creatClass = (item) => new Card(item, cardSelector, {openPopup}).getTemplate();
+
 function renderList(data) {
   data.forEach((item) => {
-    const newElement = new Card(item, cardSelector, {openWindowViev}).getTemplate();
+    const newElement = creatClass(item);
     pasteElement(newElement);
   });
 }
@@ -138,3 +133,5 @@ popupList.forEach((popup) => {
 
 popupWindowEditValidator.enableValidation();
 popupWindowAddValidator.enableValidation();
+
+export {popapContainerViev, popupTitleViev, popapWindowViev}
