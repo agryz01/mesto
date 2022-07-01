@@ -4,15 +4,17 @@ export class Card {
     this._name = cardElement.name;
     this._link = cardElement.link;
     this._listElement = document.querySelector(cardSelector).content;
+    this._cardElement = this._listElement.querySelector('.element').cloneNode(true);
+    this._buttonFavorit = this._cardElement.querySelector('.element__favourites');
     this._openPopup = openPopup;
   }
 
-  _handleCardFavourites(buttonFavorit) {
-    buttonFavorit.classList.toggle('element__favourites_active');
+  _handleCardFavourites() {
+    this._buttonFavorit.classList.toggle('element__favourites_active');
   }
 
-  _handleCardDelete(cardElement) {
-    cardElement.remove();
+  _handleCardDelete() {
+    this._cardElement.remove();
   }
 
   _handleWindowViev() {
@@ -23,22 +25,20 @@ export class Card {
   }
 
   getTemplate() {
-    const cardElement = this._listElement.querySelector('.element').cloneNode(true);
-    const titleElement = cardElement.querySelector('.element__title');
-    const imageElement = cardElement.querySelector('.element__image');
-    const buttonFavorit = cardElement.querySelector('.element__favourites');
-    const buttonDeletIcon = cardElement.querySelector('.element__delet-icon');
+    const titleElement = this._cardElement.querySelector('.element__title');
+    const imageElement = this._cardElement.querySelector('.element__image');
+    const buttonDeletIcon = this._cardElement.querySelector('.element__delet-icon');
     titleElement.textContent = this._name;
     imageElement.style = `background-image: url(${this._link});`;
-    buttonFavorit.addEventListener('click', () => {
-      this._handleCardFavourites(buttonFavorit);
+    this._buttonFavorit.addEventListener('click', () => {
+      this._handleCardFavourites();
     });
     buttonDeletIcon.addEventListener('click', () => {
-      this._handleCardDelete(cardElement);
+      this._handleCardDelete();
     });
     imageElement.addEventListener('click', () => {
       this._handleWindowViev();
     });
-    return cardElement;
+    return this._cardElement;
   }
 }
