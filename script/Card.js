@@ -1,9 +1,9 @@
 import { popapContainerViev, popupTitleViev, popapWindowViev } from "./index.js";
 export class Card {
-  constructor(cardElement, cardSelector, {openPopup}) {
+  constructor(cardElement, cardSelector, { openPopup }) {
     this._name = cardElement.name;
     this._link = cardElement.link;
-    this._listElement = document.querySelector(cardSelector).content.cloneNode(true);
+    this._listElement = document.querySelector(cardSelector).content;
     this._openPopup = openPopup;
   }
 
@@ -23,11 +23,11 @@ export class Card {
   }
 
   getTemplate() {
-    const titleElement = this._listElement.querySelector('.element__title');
-    const imageElement = this._listElement.querySelector('.element__image');
-    const buttonFavorit = this._listElement.querySelector('.element__favourites');
-    const buttonDeletIcon = this._listElement.querySelector('.element__delet-icon');
-    const cardElement = this._listElement.querySelector('.element');
+    const cardElement = this._listElement.querySelector('.element').cloneNode(true);
+    const titleElement = cardElement.querySelector('.element__title');
+    const imageElement = cardElement.querySelector('.element__image');
+    const buttonFavorit = cardElement.querySelector('.element__favourites');
+    const buttonDeletIcon = cardElement.querySelector('.element__delet-icon');
     titleElement.textContent = this._name;
     imageElement.style = `background-image: url(${this._link});`;
     buttonFavorit.addEventListener('click', () => {
@@ -39,6 +39,6 @@ export class Card {
     imageElement.addEventListener('click', () => {
       this._handleWindowViev();
     });
-    return this._listElement;
+    return cardElement;
   }
 }

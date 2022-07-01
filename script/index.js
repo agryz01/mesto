@@ -88,31 +88,27 @@ function pasteElement(card) {
 
 const creatClass = (item) => new Card(item, cardSelector, {openPopup}).getTemplate();
 
-function renderList(data) {
-  data.forEach((item) => {
-    const newElement = creatClass(item);
-    pasteElement(newElement);
-  });
-}
-
 //функционал добавления карточки
 
 function handleAddCardFormSubmit(evt) {
   evt.preventDefault();
-  const newCard = [
-    {
+  const newCard = {
       name: namePlace.value,
       link: urlPlace.value
-    }
-  ];
+    };
   markFormAdd = true;
-  renderList(newCard);
+  const newElement = creatClass(newCard);
+  pasteElement(newElement);
   closePopup(popupWindowAdd);
 }
 
 // создание первых карточек
 
-renderList(initialCards);
+initialCards.forEach((item) => {
+  const newElement = creatClass(item);
+  console.log(newElement);
+  pasteElement(newElement);
+});
 
 // слушатели кнопок форм
 
