@@ -106,7 +106,6 @@ function handleAddCardFormSubmit(evt) {
 
 initialCards.forEach((item) => {
   const newElement = creatClass(item);
-  console.log(newElement);
   pasteElement(newElement);
 });
 
