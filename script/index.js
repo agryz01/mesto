@@ -1,6 +1,7 @@
 import { initialCards, config } from "./data.js";
 import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
+import { Section } from "./Section.js";
 
 const editButton = document.querySelector('.profile__edit-button');
 const popupWindowEdit = document.querySelector('.popup_window_edit');
@@ -14,13 +15,11 @@ const addButon = document.querySelector('.profile__add-button');
 const namePlace = popupWindowAdd.querySelector('.popup__input-text_input_place');
 const urlPlace = popupWindowAdd.querySelector('.popup__input-text_input_url');
 const formWindowAddElement = popupWindowAdd.querySelector('.popup__container');
-const cardListElements = document.querySelector('.elements');
 const popapContainerViev = document.querySelector('.popup__image');
 const popupTitleViev = document.querySelector('.popup__title-viev');
 const popapWindowViev = document.querySelector('.popup_window_viev');
 const popupList = Array.from(document.querySelectorAll('.popup'));
 const cardSelector = '.template-element';
-let markFormAdd = false;
 
 const popupWindowEditValidator = new FormValidator(config, popupWindowEdit);
 const popupWindowAddValidator = new FormValidator(config, popupWindowAdd);
@@ -74,19 +73,14 @@ addButon.addEventListener('click', function () {
   openPopup(popupWindowAdd);
 });
 
-//функция вставки эл-та
-
-function pasteElement(card) {
-  if (markFormAdd) {
-    cardListElements.prepend(card);
-  } else {
-    cardListElements.append(card);
-  }
-}
-
 // функция создания экземпляра класса
 
-const creatClass = (item) => new Card(item, cardSelector, {openPopup}).getTemplate();
+const renderer = (item) => new Card(item, cardSelector, {openPopup}).getTemplate();
+
+// создание первых карточек
+
+const startCards = new Section({renderer}, '.elements');
+startCards.renderItems(initialCards);
 
 //функционал добавления карточки
 
@@ -96,18 +90,11 @@ function handleAddCardFormSubmit(evt) {
       name: namePlace.value,
       link: urlPlace.value
     };
-  markFormAdd = true;
-  const newElement = creatClass(newCard);
-  pasteElement(newElement);
+  const newElement = renderer(newCard);
+  console.log(newElement);
+  startCards.addItem(newElement);
   closePopup(popupWindowAdd);
 }
-
-// создание первых карточек
-
-initialCards.forEach((item) => {
-  const newElement = creatClass(item);
-  pasteElement(newElement);
-});
 
 // слушатели кнопок форм
 
