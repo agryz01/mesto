@@ -1,12 +1,11 @@
-import { popapContainerViev, popupTitleViev, popapWindowViev } from "./index.js";
 export class Card {
-  constructor(cardElement, cardSelector, { openPopup }) {
+  constructor(cardElement, cardSelector, { handleCardClick }) {
     this._name = cardElement.name;
     this._link = cardElement.link;
     this._listElement = document.querySelector(cardSelector).content;
     this._cardElement = this._listElement.querySelector('.element').cloneNode(true);
     this._buttonFavorit = this._cardElement.querySelector('.element__favourites');
-    this._openPopup = openPopup;
+    this._handleCardClick = handleCardClick;
   }
 
   _handleCardFavourites() {
@@ -15,13 +14,6 @@ export class Card {
 
   _handleCardDelete() {
     this._cardElement.remove();
-  }
-
-  _handleWindowViev() {
-    popupTitleViev.textContent = this._name;
-    popapContainerViev.src = this._link;
-    popapContainerViev.alt = `картинка "${this._name}" в полный размер.`;
-    this._openPopup(popapWindowViev);
   }
 
   getTemplate() {
@@ -37,7 +29,7 @@ export class Card {
       this._handleCardDelete();
     });
     imageElement.addEventListener('click', () => {
-      this._handleWindowViev();
+      this._handleCardClick(this._name, this._link);
     });
     return this._cardElement;
   }

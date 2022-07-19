@@ -2,6 +2,7 @@ import { initialCards, config } from "./data.js";
 import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
 import { Section } from "./Section.js";
+import { PopupWithImage } from "./PopupWithImage.js";
 
 const editButton = document.querySelector('.profile__edit-button');
 const popupWindowEdit = document.querySelector('.popup_window_edit');
@@ -10,42 +11,51 @@ const nameInput = popupWindowEdit.querySelector('.popup__input-text_input_name')
 const jobInput = popupWindowEdit.querySelector('.popup__input-text_input_activity');
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
+
 const popupWindowAdd = document.querySelector('.popup_window_add');
+
 const addButon = document.querySelector('.profile__add-button');
+
 const namePlace = popupWindowAdd.querySelector('.popup__input-text_input_place');
 const urlPlace = popupWindowAdd.querySelector('.popup__input-text_input_url');
-const formWindowAddElement = popupWindowAdd.querySelector('.popup__container');
+
+//const formWindowAddElement = popupWindowAdd.querySelector('.popup__container');
 const popapContainerViev = document.querySelector('.popup__image');
 const popupTitleViev = document.querySelector('.popup__title-viev');
-const popapWindowViev = document.querySelector('.popup_window_viev');
+//const popapWindowViev = document.querySelector('.popup_window_viev');
 const popupList = Array.from(document.querySelectorAll('.popup'));
 const cardSelector = '.template-element';
 
 const popupWindowEditValidator = new FormValidator(config, popupWindowEdit);
 const popupWindowAddValidator = new FormValidator(config, popupWindowAdd);
+const popapWindowViev = new PopupWithImage('.popup_window_viev');
 
-//функция закрытия popup
+//обработчик клика по kарточке
 
-function closePopup(popup) {
-  document.removeEventListener('keydown', handleEscKey);
-  popup.classList.remove('popup_opened');
-}
+const handleCardClick = (name, link) => popapWindowViev.open(name, link);
 
-//обработка нажатия клавиши Escap
+// //функция закрытия popup
 
-function handleEscKey(evt) {
-  if (evt.key === 'Escape') {
-    const popup = document.querySelector('.popup_opened');
-    closePopup(popup);
-  }
-}
+// function closePopup(popup) {
+//   document.removeEventListener('keydown', handleEscKey);
+//   popup.classList.remove('popup_opened');
+// }
 
-//функция открытия popup
+// //обработка нажатия клавиши Escap
 
-function openPopup(popup) {
-  popup.classList.add('popup_opened');
-  document.addEventListener('keydown', handleEscKey);
-}
+// function handleEscKey(evt) {
+//   if (evt.key === 'Escape') {
+//     const popup = document.querySelector('.popup_opened');
+//     closePopup(popup);
+//   }
+// }
+
+// //функция открытия popup
+
+// function openPopup(popup) {
+//   popup.classList.add('popup_opened');
+//   document.addEventListener('keydown', handleEscKey);
+// }
 
 //editpopup
 
@@ -75,7 +85,7 @@ addButon.addEventListener('click', function () {
 
 // функция создания экземпляра класса
 
-const renderer = (item) => new Card(item, cardSelector, {openPopup}).getTemplate();
+const renderer = (item) => new Card(item, cardSelector, {handleCardClick}).getTemplate();
 
 // создание первых карточек
 
@@ -84,36 +94,37 @@ startCards.renderItems(initialCards);
 
 //функционал добавления карточки
 
-function handleAddCardFormSubmit(evt) {
+const handleAddCardFormSubmit = (evt) => {
   evt.preventDefault();
   const newCard = {
       name: namePlace.value,
       link: urlPlace.value
     };
   const newElement = renderer(newCard);
-  console.log(newElement);
   startCards.addItem(newElement);
   closePopup(popupWindowAdd);
 }
 
 // слушатели кнопок форм
 
-formWindowEditElement.addEventListener('submit', handleProfileFormSubmit);
-formWindowAddElement.addEventListener('submit', handleAddCardFormSubmit);
+// formWindowEditElement.addEventListener('submit', handleProfileFormSubmit);
+// formWindowAddElement.addEventListener('submit', handleAddCardFormSubmit);
 
 //слушатели закрытия по клику по оверлею или крестику всех попапов
 
-popupList.forEach((popup) => {
-  popup.addEventListener('mousedown', (evt) => {
-    if ((evt.target.classList.contains('popup_opened')) || (evt.target.classList.contains('popup__closing-icon'))) {
-      closePopup(popup);
-    }
-  });
-});
+popapWindowViev.setEventListeners();
+
+// popupList.forEach((popup) => {
+//   popup.addEventListener('mousedown', (evt) => {
+//     if ((evt.target.classList.contains('popup_opened')) || (evt.target.classList.contains('popup__closing-icon'))) {
+//       closePopup(popup);
+//     }
+//   });
+// });
 
 // включаем валидацию
 
 popupWindowEditValidator.enableValidation();
 popupWindowAddValidator.enableValidation();
 
-export {popapContainerViev, popupTitleViev, popapWindowViev}
+//export {popapContainerViev, popupTitleViev, popapWindowViev}
