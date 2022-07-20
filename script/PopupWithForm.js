@@ -1,26 +1,31 @@
 import { Popup } from "./Popup.js";
 
 export class PopupWithForm extends Popup {
-  constructor(popupSelector, {handleAddCardFormSubmit}) {
+  constructor(popupSelector, { handleFormSubmit }) {
     super(popupSelector);
-    this._formWindowAddElement = this._popup.querySelector('.popup__container');
-    this._handleAddCardFormSubmit = handleAddCardFormSubmit;
-    // this._namePlace = this._popup.querySelector('.popup__input-text_input_place');
-    // this._urlPlace = this._popup.querySelector('.popup__input-text_input_url');
-    this._inputList = Array.from(this._formWindowAddElement.querySelectorAll('.popup__input-text'));
+    this.popupForm = this._popup.querySelector('.popup__container');
+    this._handleFormSubmit = handleFormSubmit;
+    this._inputList = Array.from(this.popupForm.querySelectorAll('.popup__input-text'));
   }
 
   _getInputValues() {
-    this._inputElementValue = {};
+    this._inputElementValues = {};
     this._inputList.forEach((inputElement) => {
-      this._inputElementValue = inputElement.value;
-      console.log(this._inputElementValue);
-      return this._inputElementValue
+      this._inputElementValues[inputElement.name] = inputElement.value;
     })
+    return this._inputElementValues;
   }
 
   setEventListeners() {
-    this._formWindowAddElement.addEventListener('submit', this._handleAddCardFormSubmit);
+    this.popupForm.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+      this._handleFormSubmit(this._getInputValues())
+    });
     super.setEventListeners();
+  }
+
+  close() {
+    this.popupForm.reset();
+    super.close();
   }
 }
