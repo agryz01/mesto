@@ -5,10 +5,7 @@ export class Section {
   }
 
   renderItems(items) {
-    items.forEach((item) => {
-      const newElement = this._renderer(item);
-      this.addItem(newElement, false);
-    });
+    items.forEach(item => this._renderer(item));
   }
 
   addItem(card, prepend = true) {
