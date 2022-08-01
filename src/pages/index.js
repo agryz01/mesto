@@ -21,7 +21,7 @@ const popupWindowAdd = new PopupWithForm('.popup_window_add', {
       link: placeurl
     }
     const newElement = creatCard(newCard);
-    startCards.addItem(newElement.getTemplate());
+    startCards.addItem(newElement);
     popupWindowAdd.close();
   }
 })
@@ -61,14 +61,14 @@ addButon.addEventListener('click', () => {
 
 // функция создания экземпляра класса
 
-const creatCard = (item) => new Card(item, cardSelector, { handleCardClick });
+const creatCard = (item) => new Card(item, cardSelector, { handleCardClick }).getTemplate();
 
 // создание первых карточек
 
 const startCards = new Section({
   renderer: (item) => {
     const newCard = creatCard(item);
-    startCards.addItem(newCard.getTemplate(), false);
+    startCards.addItem(newCard, false);
   }
 }, '.elements');
 startCards.renderItems(initialCards);
