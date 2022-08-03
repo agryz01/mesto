@@ -11,7 +11,6 @@ export class Api {
       headers: this._headers
     })
       .then(res => res.json())
-      //.then(info => console.log(info))
   }
 
   setUserInformation(yourname, yourjob) {
@@ -31,7 +30,17 @@ export class Api {
       headers: this._headers
     })
       .then(res => res.json())
-      //.then(data => console.log(data))
+  }
+
+  addCard(placename, placeurl) {
+    return fetch(`${this._url}cards`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: placename,
+        link: placeurl
+      })
+    })
   }
 
 }

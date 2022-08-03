@@ -1,5 +1,5 @@
 import './index.css';
-import { /*initialCards, */config } from "../script/data.js";
+import { config } from "../script/data.js";
 import { Card } from "../script/components/Card.js";
 import { FormValidator } from "../script/components/FormValidator.js";
 import { Section } from "../script/components/Section.js";
@@ -22,7 +22,16 @@ const popupWindowAdd = new PopupWithForm('.popup_window_add', {
       link: placeurl
     }
     const newElement = creatCard(newCard);
-    startCards.addItem(newElement);
+    console.log(placename, placeurl);
+    api.addCard(placename, placeurl)
+      .then((res) => {
+        if (res.ok) {
+          startCards.addItem(newElement);
+          console.log(res);
+        }
+        console.log(res.status);
+      })
+
     popupWindowAdd.close();
   }
 })
@@ -64,19 +73,9 @@ addButon.addEventListener('click', () => {
   popupWindowAdd.open();
 });
 
-// const api = new Api({
-//   url: 'https://mesto.nomoreparties.co/v1/cohort-46/',
-//   headers: {
-//     authorization: '7db7170a-ac3c-4dc5-8594-c4340cfc9c1b',
-//     'Content-Type': 'application/json; charset=UTF-8'
-//   }
-// });
-
 // функция создания экземпляра класса
 
 const creatCard = (item) => new Card(item, cardSelector, { handleCardClick }).getTemplate();
-
-// создание первых карточек
 
 const startCards = new Section({
   renderer: (item) => {
@@ -84,7 +83,6 @@ const startCards = new Section({
     startCards.addItem(newCard, false);
   }
 }, '.elements');
-// startCards.renderItems(initialCards);
 
 // слушатели закрытия по клику по оверлею или крестику
 
@@ -115,31 +113,10 @@ api.getUserInformation()
   .then(data => {
     userInfo.setUserInfo(data.name, data.about);
   });
+
+// создание первых карточек
+
 api.getCards()
   .then((data => {
     startCards.renderItems(Array.from(data));
   }))
-
-// fetch(`https://mesto.nomoreparties.co/v1/cohort-46/cards`, {
-//   method: 'GET',
-//   headers: {
-//         authorization: '7db7170a-ac3c-4dc5-8594-c4340cfc9c1b',
-//         'Content-Type': 'application/json; charset=UTF-8'
-//       }
-// })
-//   .then(res => res.json())
-//   .then(data => Array.from(data))
-//   .then(data => console.log(data))
-//   .then((data) => {
-//     const initialCards = data;
-//     return initialCards
-//   });
-
-//   const startCards = new Section({
-//     renderer: (item) => {
-//       const newCard = creatCard(item);
-//       startCards.addItem(newCard, false);
-//     }
-//   }, '.elements');
-//   startCards.renderItems(initialCards);
-
