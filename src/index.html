@@ -70,19 +70,31 @@
 
   <div class="popup popup_window_viev">
     <div class="popup__container-viev">
-      <img src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg" alt="" class="popup__image">
+      <img src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg" alt=""
+        class="popup__image">
       <button type="button" class="popup__closing-icon"></button>
       <h2 class="popup__title-viev"></h2>
     </div>
+  </div>
+
+  <div class="popup popup_window_confirmation">
+    <div class="popup__container popup__container_confirmation">
+      <button type="button" class="popup__closing-icon"></button>
+      <h2 class="popup__title">Вы уверены?</h2>
+      <button type="button" aria-label="удаление карточки" class="popup__button">Да</button>
+    </div>    
   </div>
 
   <template class="template-element">
     <li class="element">
       <div style="background-image: url('');" class="element__image"></div>
       <div class="element__group">
-        <button type="button" aria-label="удаление карточки" class="element__delet-icon"></button>
+        <button type="button" aria-label="открытие окна подтверждения удаление карточки" class="element__delet-icon"></button>
         <h2 class="element__title"></h2>
-        <button type="button" aria-label="добавление в избранное." class="element__favourites"></button>
+        <div class="element__favourites-container">
+          <button type="button" aria-label="добавление в избранное." class="element__favourites"></button>
+          <span class="element__namber-of-favourites">0</span>
+        </div>
       </div>
     </li>
   </template>
