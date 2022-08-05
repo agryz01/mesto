@@ -13,11 +13,13 @@ const editButton = document.querySelector('.profile__edit-button');
 const nameInput = document.querySelector('.popup__input-text_input_name');
 const jobInput = document.querySelector('.popup__input-text_input_activity');
 const addButon = document.querySelector('.profile__add-button');
+const editAvatarButton = document.querySelector('.profile__avatar');
 const cardSelector = '.template-element';
 
 const popupWindowViev = new PopupWithImage('.popup_window_viev');
 const popupWindowAdd = new PopupWithForm('.popup_window_add', {
   handleFormSubmit: ({ placename, placeurl }) => {
+    popupWindowAdd.button.textContent = 'Сохранение...';
     api.addCard(placename, placeurl)
       .then(res => res.json())
       .then((result) => {
@@ -28,6 +30,7 @@ const popupWindowAdd = new PopupWithForm('.popup_window_add', {
         console.log(err); // выведем ошибку в консоль
       });
     popupWindowAdd.close();
+    popupWindowAdd.button.textContent = 'Создать';
   }
 })
 
@@ -50,22 +53,44 @@ const popupWindowConfirmation = new PopupWithConfirmation('.popup_window_confirm
 
 const popupWindowAddValidator = new FormValidator(config, popupWindowAdd.popupForm);
 
-const userInfo = new UserInfo('.profile__title', '.profile__subtitle');
+const userInfo = new UserInfo('.profile__title', '.profile__subtitle', '.profile__avatar');
 
 const popupWindowEdit = new PopupWithForm('.popup_window_edit', {
   handleFormSubmit: ({ yourname, yourjob }) => {
+    popupWindowEdit.button.textContent = 'Сохранение...';
     api.setUserInformation(yourname, yourjob)
       .then((res) => {
+        //console.log(yourname, yourjob, userInfo.id, userInfo.avatar);
         userInfo.setUserInfo(yourname, yourjob);
       })
       .catch((err) => {
         console.log(err); // выведем ошибку в консоль
       });
     popupWindowEdit.close();
+    popupWindowEdit.button.textContent = 'Сохранить';
   }
 });
 
 const popupWindowEditValidator = new FormValidator(config, popupWindowEdit.popupForm);
+
+const popupWindowAvatar = new PopupWithForm('.popup_window_edit-avatar', {
+  handleFormSubmit: ({ avatarurl }) => {
+    popupWindowAvatar.button.textContent = 'Сохранение...';
+    api.setAvatar(avatarurl)
+      .then((res) => {
+        if (res.ok) {
+          document.querySelector('.profile__avatar').style = `background-image: url(${avatarurl});`;
+        }
+      })
+      .catch((err) => {
+        console.log(err); // выведем ошибку в консоль
+      });
+    popupWindowAvatar.close();
+    popupWindowAvatar.button.textContent = 'Сохранить';
+  }
+})
+
+const popupWindowAvatarValidator = new FormValidator(config, popupWindowAvatar.popupForm);
 
 //обработчик клика по kарточке
 
@@ -88,9 +113,34 @@ addButon.addEventListener('click', () => {
   popupWindowAdd.open();
 });
 
+editAvatarButton.addEventListener('click', () => {
+  popupWindowAvatarValidator.resetValidation();
+  popupWindowAvatar.open();
+})
+
+const isFavourites = (likes) => {
+  return likes.some(item => item._id === userInfo.id)
+}
+
+const toggleLikes = (isFavourites, idCard) => {
+  api.toggleCardLikes(isFavourites, idCard)
+    .then((res) => {
+      return (res);
+      //console.log(res.json);
+
+      //creatCard.toggleFavourites(res);
+    })
+}
+
+// const addLikes = (likes) => {
+//   console.log(likes);
+//  likes._id = userInfo.id;
+//  return likes;
+// }
+
 // // функция создания экземпляра класса
 
-const creatCard = (item) => new Card(item, cardSelector, { handleCardClick, openWindowsConfirmation });
+const creatCard = (item) => new Card(item, cardSelector, { handleCardClick, openWindowsConfirmation, isOwner, isFavourites, toggleLikes });
 
 const startCards = new Section({
   renderer: (item) => {
@@ -99,17 +149,21 @@ const startCards = new Section({
   }
 }, '.elements');
 
+const isOwner = (idOwner) => idOwner === userInfo.id;
+
 // слушатели закрытия по клику по оверлею или крестику
 
 popupWindowViev.setEventListeners();
 popupWindowAdd.setEventListeners();
 popupWindowEdit.setEventListeners();
 popupWindowConfirmation.setEventListeners();
+popupWindowAvatar.setEventListeners();
 
 // включаем валидацию
 
 popupWindowEditValidator.enableValidation();
 popupWindowAddValidator.enableValidation();
+popupWindowAvatarValidator.enableValidation();
 
 const api = new Api({
   url: 'https://mesto.nomoreparties.co/v1/cohort-46/',
@@ -125,16 +179,11 @@ const api = new Api({
   }
 });
 
-api.getUserInformation()
-  .then(data => {
-    userInfo.setUserInfo(data.name, data.about, data._id, data.avatar);
-  });
-
-// создание первых карточек
-
-api.getCards()
-  .then((data => {
-    startCards.renderItems(data);
-  }))
-
-console.log(userInfo);
+Promise.all([
+  api.getUserInformation(),
+  api.getCards()
+])
+  .then(([userData, cardData]) => {
+    userInfo.setUserInfo(userData.name, userData.about, userData._id, userData.avatar);
+    startCards.renderItems(cardData);
+  })

@@ -22,6 +22,7 @@ export class Api {
         about: yourjob
       })
     })
+      .then(res => this._response(res));
   }
 
   getCards() {
@@ -41,6 +42,7 @@ export class Api {
         link: placeurl
       })
     })
+      .then(res => this._response(res));
   }
 
   deletCard(idCard) {
@@ -48,6 +50,28 @@ export class Api {
       method: 'DELETE',
       headers: this._headers
     })
+      .then(res => this._response(res));
+  }
+
+  toggleCardLikes(isFavourites, idCard) {
+    return fetch(`${this._url}cards/${idCard}/likes`, {
+      method: isFavourites
+        ? 'DELETE'
+        : 'PUT',
+      headers: this._headers
+    })
+      .then(res => this._response(res));
+  }
+
+  setAvatar(url) {
+    return fetch(`${this._url}users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: url
+      })
+    })
+      .then(res => this._response(res));
   }
 
 }

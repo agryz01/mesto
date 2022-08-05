@@ -2,6 +2,7 @@ export class Popup {
   constructor(popupSelector) {
     this._linkHandleEscKey = this._handleEscKey.bind(this);
     this._popup = document.querySelector(popupSelector);
+    this.button = this._popup.querySelector('.popup__button');
   }
 
   _handleEscKey(evt) {

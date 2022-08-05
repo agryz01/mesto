@@ -17,7 +17,6 @@ export class PopupWithConfirmation extends Popup {
   open(id, target) {
     this._id = id;
     this._target = target;
-    //console.log('PWC' + this._id)
     super.open();
 
   }
