@@ -14,16 +14,12 @@ export class Card {
     this._isOwner = isOwner;
     this._isFavourites = isFavourites(this._likes);
     this._toggleLikes = toggleLikes;
-    //this._addLikes = addLikes;
   }
 
-  _handleCardFavourites() {
-    this._toggleLikes(this._isFavourites, this._id);
+  handleCardFavourites(data) {
     this._buttonFavorit.classList.toggle('element__favourites_active');
     this._isFavourites = !this._isFavourites;
-    //this._addLikes(this._likes);
-    //console.log(this._addLikes(this._likes));
-    this._namberOfFavorites.textContent = this._likes.length;
+    this._namberOfFavorites.textContent = data.likes.length;
   }
 
   getTemplate() {
@@ -44,16 +40,11 @@ export class Card {
     }
     this._namberOfFavorites.textContent = this._likes.length;
     this._buttonFavorit.addEventListener('click', () => {
-      this._handleCardFavourites();
+      this._toggleLikes(this._isFavourites, this._id);;
     });
     imageElement.addEventListener('click', () => {
       this._handleCardClick(this._name, this._link);
     });
     return this._cardElement;
   }
-
-  // toggleFavourites(card) {
-  //   this._buttonFavorit.classList.toggle('element__favourites_active');
-  //   this._namberOfFavorites.textContent = card._likes.length;
-  // }
 }

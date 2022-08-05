@@ -60,8 +60,8 @@ const popupWindowEdit = new PopupWithForm('.popup_window_edit', {
     popupWindowEdit.button.textContent = 'Сохранение...';
     api.setUserInformation(yourname, yourjob)
       .then((res) => {
-        //console.log(yourname, yourjob, userInfo.id, userInfo.avatar);
-        userInfo.setUserInfo(yourname, yourjob);
+        document.querySelector('.profile__title').textContent = yourname;
+        document.querySelector('.profile__subtitle').textContent = yourjob;
       })
       .catch((err) => {
         console.log(err); // выведем ошибку в консоль
@@ -122,25 +122,26 @@ const isFavourites = (likes) => {
   return likes.some(item => item._id === userInfo.id)
 }
 
-const toggleLikes = (isFavourites, idCard) => {
-  api.toggleCardLikes(isFavourites, idCard)
-    .then((res) => {
-      return (res);
-      //console.log(res.json);
-
-      //creatCard.toggleFavourites(res);
-    })
+const creatCard = (item) => {
+  const card = new Card(item, cardSelector, {
+    handleCardClick,
+    openWindowsConfirmation,
+    isOwner,
+    isFavourites,
+    toggleLikes: (isFavourites, idCard) => {
+      api.toggleCardLikes(isFavourites, idCard)
+      .then((res) => res.json())
+      .then((data) => {
+        card.handleCardFavourites(data);
+      }
+      )
+      .catch((err) => {
+        console.log(err); // выведем ошибку в консоль
+      });
+    }
+   });
+   return card;
 }
-
-// const addLikes = (likes) => {
-//   console.log(likes);
-//  likes._id = userInfo.id;
-//  return likes;
-// }
-
-// // функция создания экземпляра класса
-
-const creatCard = (item) => new Card(item, cardSelector, { handleCardClick, openWindowsConfirmation, isOwner, isFavourites, toggleLikes });
 
 const startCards = new Section({
   renderer: (item) => {
