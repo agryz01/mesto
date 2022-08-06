@@ -22,6 +22,10 @@ export class Card {
     this._namberOfFavorites.textContent = data.likes.length;
   }
 
+  handleCardDelet() {
+    this._cardElement.remove();
+  }
+
   getTemplate() {
     const titleElement = this._cardElement.querySelector('.element__title');
     const imageElement = this._cardElement.querySelector('.element__image');

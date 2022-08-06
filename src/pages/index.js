@@ -35,30 +35,16 @@ const popupWindowAdd = new PopupWithForm('.popup_window_add', {
   }
 })
 
-const popupWindowConfirmation = new PopupWithConfirmation('.popup_window_confirmation', {
-  handleWindowConfirmation: (id, elementCard) => {
-    api.deletCard(id)
-      .then(res => {
-        elementCard.remove();
-        popupWindowConfirmation.close();
-      })
-      .catch((err) => {
-        console.log(err); // выведем ошибку в консоль
-      })
-  }
-});
-
 const popupWindowAddValidator = new FormValidator(config, popupWindowAdd.popupForm);
 
 const userInfo = new UserInfo('.profile__title', '.profile__subtitle', '.profile__avatar');
 
 const popupWindowEdit = new PopupWithForm('.popup_window_edit', {
-  handleFormSubmit: ({ yourname, yourjob }) => {
+  handleFormSubmit: (data) => {
     popupWindowEdit.button.textContent = 'Сохранение...';
-    api.setUserInformation(yourname, yourjob)
+    api.setUserInformation(data.name, data.about)
       .then((res) => {
-        document.querySelector('.profile__title').textContent = yourname;
-        document.querySelector('.profile__subtitle').textContent = yourjob;
+        userInfo.setUserInfo(res);
         popupWindowEdit.close();
       })
       .catch((err) => {
@@ -77,7 +63,7 @@ const popupWindowAvatar = new PopupWithForm('.popup_window_edit-avatar', {
     popupWindowAvatar.button.textContent = 'Сохранение...';
     api.setAvatar(data.avatar)
       .then((res) => {
-        userInfo.setUserAvatar(data);
+        userInfo.setUserInfo(res);
         popupWindowAvatar.close();
       })
       .catch((err) => {
@@ -94,10 +80,6 @@ const popupWindowAvatarValidator = new FormValidator(config, popupWindowAvatar.p
 //обработчик клика по kарточке
 
 const handleCardClick = (name, link) => popupWindowViev.open(name, link);
-
-const openWindowsConfirmation = (idCard, elementCard) => {
-  popupWindowConfirmation.open(idCard, elementCard);
-}
 
 editButton.addEventListener('click', () => {
   const value = userInfo.getUserInfo();
@@ -124,7 +106,22 @@ const isFavourites = (likes) => {
 const creatCard = (item) => {
   const card = new Card(item, cardSelector, {
     handleCardClick,
-    openWindowsConfirmation,
+    openWindowsConfirmation: (idCard, elementCard) => {
+      const popupWindowConfirmation = new PopupWithConfirmation('.popup_window_confirmation', {
+        handleWindowConfirmation: (id, elementCard) => {
+          api.deletCard(id)
+            .then(res => {
+              card.handleCardDelet();
+              popupWindowConfirmation.close();
+            })
+            .catch((err) => {
+              console.log(err); // выведем ошибку в консоль
+            })
+        }
+      });
+      popupWindowConfirmation.setEventListeners();
+      popupWindowConfirmation.open(idCard, elementCard);
+    },
     isOwner,
     isFavourites,
     toggleLikes: (isFavourites, idCard) => {
@@ -155,7 +152,6 @@ const isOwner = (idOwner) => idOwner === userInfo.id;
 popupWindowViev.setEventListeners();
 popupWindowAdd.setEventListeners();
 popupWindowEdit.setEventListeners();
-popupWindowConfirmation.setEventListeners();
 popupWindowAvatar.setEventListeners();
 
 // включаем валидацию
@@ -184,6 +180,5 @@ Promise.all([
 ])
   .then(([userData, cardData]) => {
     userInfo.setUserInfo(userData);
-    userInfo.setUserAvatar(userData);
     cardsContainer.renderItems(cardData);
   })
