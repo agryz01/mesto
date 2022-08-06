@@ -32,7 +32,7 @@ export class Card {
     if (this._isOwner(this._idOwner)) {
       const buttonDeletIcon = this._cardElement.querySelector('.element__delet-icon');
       buttonDeletIcon.addEventListener('click', () => {
-        this._openWindowsConfirmation(this._id, this._cardElement);
+        this._openWindowsConfirmation(this._id);
       });
     } else {
       this._cardElement.querySelector('.element__delet-icon').remove();

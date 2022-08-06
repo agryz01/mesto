@@ -106,9 +106,9 @@ const isFavourites = (likes) => {
 const creatCard = (item) => {
   const card = new Card(item, cardSelector, {
     handleCardClick,
-    openWindowsConfirmation: (idCard, elementCard) => {
+    openWindowsConfirmation: (idCard) => {
       const popupWindowConfirmation = new PopupWithConfirmation('.popup_window_confirmation', {
-        handleWindowConfirmation: (id, elementCard) => {
+        handleWindowConfirmation: (id) => {
           api.deletCard(id)
             .then(res => {
               card.handleCardDelet();
@@ -120,7 +120,7 @@ const creatCard = (item) => {
         }
       });
       popupWindowConfirmation.setEventListeners();
-      popupWindowConfirmation.open(idCard, elementCard);
+      popupWindowConfirmation.open(idCard);
     },
     isOwner,
     isFavourites,
