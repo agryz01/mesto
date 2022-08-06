@@ -21,33 +21,30 @@ const popupWindowAdd = new PopupWithForm('.popup_window_add', {
   handleFormSubmit: ({ placename, placeurl }) => {
     popupWindowAdd.button.textContent = 'Сохранение...';
     api.addCard(placename, placeurl)
-      .then(res => res.json())
       .then((result) => {
         const newElement = creatCard(result);
-        startCards.addItem(newElement.getTemplate());
+        cardsContainer.addItem(newElement.getTemplate());
+        popupWindowAdd.close();
       })
       .catch((err) => {
         console.log(err); // выведем ошибку в консоль
-      });
-    popupWindowAdd.close();
-    popupWindowAdd.button.textContent = 'Создать';
+      })
+      .finally(() => {
+        popupWindowAdd.button.textContent = 'Создать';
+      })
   }
 })
 
 const popupWindowConfirmation = new PopupWithConfirmation('.popup_window_confirmation', {
-  handleWindowConfirmation: (id, target) => {
+  handleWindowConfirmation: (id, elementCard) => {
     api.deletCard(id)
       .then(res => {
-        if (res.ok) {
-          const icon = target;
-          const cardElement = icon.closest('.element');
-          cardElement.remove();
-        }
+        elementCard.remove();
+        popupWindowConfirmation.close();
       })
       .catch((err) => {
         console.log(err); // выведем ошибку в консоль
-      });
-    popupWindowConfirmation.close();
+      })
   }
 });
 
@@ -62,31 +59,33 @@ const popupWindowEdit = new PopupWithForm('.popup_window_edit', {
       .then((res) => {
         document.querySelector('.profile__title').textContent = yourname;
         document.querySelector('.profile__subtitle').textContent = yourjob;
+        popupWindowEdit.close();
       })
       .catch((err) => {
         console.log(err); // выведем ошибку в консоль
-      });
-    popupWindowEdit.close();
-    popupWindowEdit.button.textContent = 'Сохранить';
+      })
+      .finally(() => {
+        popupWindowEdit.button.textContent = 'Сохранить';
+      })
   }
 });
 
 const popupWindowEditValidator = new FormValidator(config, popupWindowEdit.popupForm);
 
 const popupWindowAvatar = new PopupWithForm('.popup_window_edit-avatar', {
-  handleFormSubmit: ({ avatarurl }) => {
+  handleFormSubmit: (data) => {
     popupWindowAvatar.button.textContent = 'Сохранение...';
-    api.setAvatar(avatarurl)
+    api.setAvatar(data.avatar)
       .then((res) => {
-        if (res.ok) {
-          document.querySelector('.profile__avatar').style = `background-image: url(${avatarurl});`;
-        }
+        userInfo.setUserAvatar(data);
+        popupWindowAvatar.close();
       })
       .catch((err) => {
         console.log(err); // выведем ошибку в консоль
-      });
-    popupWindowAvatar.close();
-    popupWindowAvatar.button.textContent = 'Сохранить';
+      })
+      .finally(() => {
+        popupWindowAvatar.button.textContent = 'Сохранить';
+      })
   }
 })
 
@@ -96,8 +95,8 @@ const popupWindowAvatarValidator = new FormValidator(config, popupWindowAvatar.p
 
 const handleCardClick = (name, link) => popupWindowViev.open(name, link);
 
-const openWindowsConfirmation = (idCard, target) => {
-  popupWindowConfirmation.open(idCard, target);
+const openWindowsConfirmation = (idCard, elementCard) => {
+  popupWindowConfirmation.open(idCard, elementCard);
 }
 
 editButton.addEventListener('click', () => {
@@ -130,23 +129,22 @@ const creatCard = (item) => {
     isFavourites,
     toggleLikes: (isFavourites, idCard) => {
       api.toggleCardLikes(isFavourites, idCard)
-      .then((res) => res.json())
-      .then((data) => {
-        card.handleCardFavourites(data);
-      }
-      )
-      .catch((err) => {
-        console.log(err); // выведем ошибку в консоль
-      });
+        .then((data) => {
+          card.handleCardFavourites(data);
+        }
+        )
+        .catch((err) => {
+          console.log(err); // выведем ошибку в консоль
+        });
     }
-   });
-   return card;
+  });
+  return card;
 }
 
-const startCards = new Section({
+const cardsContainer = new Section({
   renderer: (item) => {
     const newCard = creatCard(item);
-    startCards.addItem(newCard.getTemplate(), false);
+    cardsContainer.addItem(newCard.getTemplate(), false);
   }
 }, '.elements');
 
@@ -174,7 +172,7 @@ const api = new Api({
   },
   response: res => {
     if (res.ok) {
-      return res;
+      return res.json();
     }
     return Promise.reject(`Ошибка: ${res.status}`);
   }
@@ -185,6 +183,7 @@ Promise.all([
   api.getCards()
 ])
   .then(([userData, cardData]) => {
-    userInfo.setUserInfo(userData.name, userData.about, userData._id, userData.avatar);
-    startCards.renderItems(cardData);
+    userInfo.setUserInfo(userData);
+    userInfo.setUserAvatar(userData);
+    cardsContainer.renderItems(cardData);
   })

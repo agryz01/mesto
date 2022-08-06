@@ -10,7 +10,7 @@ export class Api {
       method: 'GET',
       headers: this._headers
     })
-      .then(res => res.json())
+      .then(res => this._response(res));
   }
 
   setUserInformation(yourname, yourjob) {
@@ -73,5 +73,4 @@ export class Api {
     })
       .then(res => this._response(res));
   }
-
 }
